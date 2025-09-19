@@ -1,0 +1,251 @@
+Name,Year_of_Study,Degree_Branch,Python_Skill(1-5),Java_Skill(1-5),C_C++_Skill(1-5),SQL_Skill(1-5),WebDev_Skill(1-5),Communication_Skill(1-5),ProblemSolving_Skill(1-5),Leadership_Skill(1-5),Teamwork_Skill(1-5),Completed_Courses,Career_Goal,Industry_Interest,Learning_Hours_per_Week,Learning_Method,Last_Training,Desired Role,Missing_Skills,Confidence_Level(1-10),Challenges,Need_Recommendations
+Vishnu S.,3rd Year,B.Tech - ECE,4,5,1,4,3,3,1,5,2,College Projects,Data Scientist,IT / Software,> 10 hours,Classroom Workshops,More than 1 year ago,Leadership,Time Management,3,Lack of time,No
+Anitha K.,4th Year,B.Sc,1,5,2,1,1,1,3,4,3,Internships,UI/UX Designer,Research & Academia,2â5 hours,Hands-on Projects,More than 1 year ago,Web Development,Public Speaking,8,Lack of time,No
+Arun S.,3rd Year,B.Tech - ECE,3,5,4,1,5,2,4,3,2,College Projects,Cloud Engineer,Core Engineering,2â5 hours,Hands-on Projects,More than 1 year ago,Communication,Public Speaking,4,Lack of motivation,No
+Dinesh K.,1st Year,B.Tech - CSE,2,4,4,3,4,4,1,5,3,College Projects,Data Scientist,Healthcare,< 2 hours,Hands-on Projects,Within 3 months,"Java, Cloud",Cloud Computing,3,Financial constraints,Yes
+Praveen K.,3rd Year,BBA,2,3,3,3,2,1,4,5,4,College Projects,Software Developer,Healthcare,5â10 hours,Classroom Workshops,More than 1 year ago,Communication,Machine Learning,6,Lack of mentorship,Yes
+Gayathri R.,3rd Year,MBA,4,1,4,5,2,1,4,2,2,Internships,Software Developer,Core Engineering,< 2 hours,Online Courses,Within 3 months,Web Development,Advanced SQL,9,Lack of mentorship,Yes
+Swathi S.,3rd Year,B.Sc,5,1,5,4,2,1,5,5,5,Certification Exams,Entrepreneur,Core Engineering,5â10 hours,Self-study,3â6 months ago,Data Analysis,Cloud Computing,4,Financial constraints,No
+Divya S.,2nd Year,B.Sc,4,5,3,4,2,3,1,4,2,Certification Exams,Data Scientist,Core Engineering,2â5 hours,Self-study,Within 3 months,Web Development,Cloud Computing,10,Lack of time,Yes
+Vignesh S.,4th Year,B.Com,4,5,2,5,1,5,4,3,3,Internships,Data Scientist,Core Engineering,> 10 hours,Classroom Workshops,3â6 months ago,Web Development,Time Management,7,Lack of motivation,Yes
+Gayathri R.,3rd Year,MBA,3,1,4,3,3,3,1,2,1,Internships,Cloud Engineer,Healthcare,2â5 hours,Hands-on Projects,Never,"Python, SQL",Public Speaking,7,Financial constraints,Yes
+Muthu P.,3rd Year,B.Tech - ECE,1,4,3,3,2,4,5,5,5,Certification Exams,Entrepreneur,Healthcare,5â10 hours,Group/Peer Learning,Within 3 months,Communication,Public Speaking,8,Lack of motivation,Yes
+Praveen I.,1st Year,BBA,4,4,3,4,2,4,5,3,4,None,Entrepreneur,Core Engineering,> 10 hours,Classroom Workshops,Within 3 months,"Java, Cloud",Public Speaking,7,Lack of motivation,Yes
+Divya S.,3rd Year,B.Tech - CSE,3,4,1,3,5,2,3,5,5,Online Courses,Data Scientist,Research & Academia,2â5 hours,Hands-on Projects,6â12 months ago,Leadership,Advanced SQL,7,Lack of resources,No
+Divya S.,1st Year,B.Tech - CSE,4,2,4,4,4,5,2,5,1,Online Courses,Entrepreneur,Finance & Banking,2â5 hours,Self-study,More than 1 year ago,"Java, Cloud",Cloud Computing,4,Financial constraints,No
+Hari I.,1st Year,B.Sc,5,3,2,5,2,1,5,5,4,None,UI/UX Designer,Healthcare,2â5 hours,Group/Peer Learning,Never,Communication,Time Management,10,Financial constraints,Yes
+Sathish N.,3rd Year,BBA,3,5,2,4,5,1,5,1,4,College Projects,Software Developer,IT / Software,< 2 hours,Online Courses,More than 1 year ago,"Python, SQL",Public Speaking,10,Lack of resources,No
+Sathish K.,2nd Year,B.Tech - ECE,2,3,1,4,5,5,5,3,5,Online Courses,UI/UX Designer,IT / Software,< 2 hours,Self-study,6â12 months ago,Data Analysis,Machine Learning,4,Lack of motivation,Yes
+Suresh M.,2nd Year,B.Tech - ECE,5,5,5,1,4,3,3,5,2,Certification Exams,Cloud Engineer,IT / Software,5â10 hours,Online Courses,More than 1 year ago,Leadership,Public Speaking,8,Lack of time,No
+Karthik N.,3rd Year,BBA,2,3,1,2,4,5,1,4,5,Certification Exams,Data Scientist,Core Engineering,< 2 hours,Self-study,Within 3 months,Communication,Advanced SQL,7,Lack of mentorship,Yes
+Swathi K.,3rd Year,B.Com,2,1,1,4,2,2,1,3,5,Certification Exams,UI/UX Designer,Healthcare,5â10 hours,Online Courses,More than 1 year ago,Data Analysis,Time Management,6,Lack of motivation,No
+Hari M.,1st Year,B.Tech - CSE,4,2,2,1,3,5,2,2,4,College Projects,Cloud Engineer,IT / Software,< 2 hours,Hands-on Projects,3â6 months ago,Web Development,Time Management,4,Lack of time,Yes
+Swathi R.,1st Year,B.Com,4,3,1,2,2,4,2,3,3,College Projects,Software Developer,IT / Software,< 2 hours,Self-study,3â6 months ago,Web Development,Cloud Computing,7,Lack of time,Yes
+Vignesh I.,2nd Year,BBA,1,2,3,4,4,1,1,3,2,Online Courses,UI/UX Designer,Finance & Banking,> 10 hours,Hands-on Projects,3â6 months ago,Communication,Advanced SQL,5,Lack of resources,No
+Praveen R.,2nd Year,B.Com,2,2,5,1,1,3,2,3,2,None,UI/UX Designer,Core Engineering,< 2 hours,Online Courses,More than 1 year ago,Web Development,Cloud Computing,9,Lack of mentorship,No
+Suresh R.,2nd Year,B.Com,4,4,5,3,4,3,3,2,5,Internships,Data Scientist,IT / Software,2â5 hours,Group/Peer Learning,Never,"Java, Cloud",Machine Learning,7,Financial constraints,Yes
+Arun K.,1st Year,BBA,5,1,2,2,1,2,2,3,2,Certification Exams,Data Scientist,Healthcare,2â5 hours,Hands-on Projects,6â12 months ago,Leadership,Advanced SQL,10,Lack of motivation,No
+Sandhya R.,3rd Year,B.Sc,1,4,4,3,4,5,1,3,1,Certification Exams,Software Developer,Healthcare,> 10 hours,Hands-on Projects,Never,Web Development,Advanced SQL,5,Lack of mentorship,No
+Suresh S.,1st Year,B.Tech - CSE,3,5,5,2,3,5,2,4,1,None,Software Developer,Core Engineering,2â5 hours,Online Courses,Never,"Java, Cloud",Machine Learning,5,Financial constraints,No
+Karthik M.,2nd Year,B.Tech - ECE,3,3,4,1,4,4,2,3,4,None,Entrepreneur,IT / Software,> 10 hours,Group/Peer Learning,6â12 months ago,"Python, SQL",Public Speaking,4,Lack of motivation,Yes
+Sathish R.,1st Year,BBA,1,4,2,5,5,4,4,3,5,Internships,Entrepreneur,IT / Software,5â10 hours,Classroom Workshops,Never,Communication,Cloud Computing,3,Lack of mentorship,No
+Vignesh R.,4th Year,B.Tech - CSE,2,3,4,1,1,2,4,3,1,Certification Exams,Entrepreneur,Core Engineering,< 2 hours,Hands-on Projects,3â6 months ago,Leadership,Machine Learning,7,Financial constraints,No
+Divya M.,4th Year,B.Tech - CSE,4,4,5,2,2,3,2,1,1,Online Courses,Data Scientist,Core Engineering,< 2 hours,Hands-on Projects,6â12 months ago,"Python, SQL",Machine Learning,8,Financial constraints,Yes
+Lakshmi M.,3rd Year,BBA,1,1,1,3,1,5,5,2,2,None,Data Scientist,Finance & Banking,< 2 hours,Self-study,More than 1 year ago,Web Development,Advanced SQL,7,Lack of time,Yes
+Vignesh N.,1st Year,B.Tech - ECE,5,4,5,3,3,2,2,2,3,None,Software Developer,IT / Software,5â10 hours,Classroom Workshops,3â6 months ago,Communication,Advanced SQL,4,Lack of resources,No
+Muthu R.,3rd Year,B.Tech - ECE,2,1,5,2,3,4,4,2,3,Internships,Data Scientist,IT / Software,2â5 hours,Hands-on Projects,6â12 months ago,Leadership,Time Management,10,Lack of resources,No
+Divya S.,1st Year,B.Com,2,1,1,5,3,2,5,5,1,College Projects,Data Scientist,Finance & Banking,2â5 hours,Hands-on Projects,6â12 months ago,"Java, Cloud",Time Management,6,Financial constraints,No
+Karthik S.,2nd Year,B.Com,3,3,5,1,4,1,4,5,5,Online Courses,Cloud Engineer,Healthcare,< 2 hours,Online Courses,Never,"Java, Cloud",Machine Learning,5,Lack of mentorship,No
+Hari N.,1st Year,B.Com,1,1,5,3,3,4,1,3,4,Certification Exams,Software Developer,Research & Academia,< 2 hours,Online Courses,Never,Data Analysis,Machine Learning,9,Lack of mentorship,Yes
+Hari R.,4th Year,B.Tech - ECE,1,3,4,1,4,2,4,4,1,Online Courses,UI/UX Designer,Research & Academia,2â5 hours,Hands-on Projects,Within 3 months,"Java, Cloud",Public Speaking,7,Lack of mentorship,No
+Muthu S.,3rd Year,BBA,5,3,5,5,4,3,5,5,2,Internships,Entrepreneur,IT / Software,2â5 hours,Hands-on Projects,Within 3 months,"Python, SQL",Machine Learning,7,Lack of motivation,No
+Meena N.,1st Year,B.Tech - ECE,4,1,4,2,5,3,4,2,2,College Projects,Data Scientist,Research & Academia,< 2 hours,Self-study,More than 1 year ago,"Python, SQL",Public Speaking,8,Financial constraints,Yes
+Vishnu P.,4th Year,MBA,4,1,1,1,4,1,1,2,2,College Projects,Software Developer,Healthcare,5â10 hours,Online Courses,Never,Data Analysis,Cloud Computing,3,Lack of motivation,No
+Priya R.,3rd Year,B.Sc,2,5,3,2,2,3,3,3,2,Online Courses,Entrepreneur,Core Engineering,< 2 hours,Classroom Workshops,More than 1 year ago,"Python, SQL",Machine Learning,4,Lack of motivation,Yes
+Sandhya I.,1st Year,B.Com,5,3,4,3,2,1,2,2,5,Internships,Software Developer,Research & Academia,< 2 hours,Classroom Workshops,Never,"Python, SQL",Advanced SQL,3,Lack of resources,No
+Sandhya K.,3rd Year,B.Sc,2,2,2,5,5,5,2,5,3,Certification Exams,Data Scientist,IT / Software,2â5 hours,Group/Peer Learning,More than 1 year ago,Leadership,Advanced SQL,9,Lack of resources,Yes
+Lakshmi I.,1st Year,B.Tech - CSE,2,3,3,4,3,3,4,3,2,None,Entrepreneur,Core Engineering,< 2 hours,Classroom Workshops,3â6 months ago,Leadership,Cloud Computing,6,Lack of time,No
+Meena P.,1st Year,B.Tech - ECE,5,2,5,1,3,4,4,5,4,College Projects,Software Developer,Healthcare,5â10 hours,Classroom Workshops,More than 1 year ago,Leadership,Time Management,8,Lack of motivation,No
+Arun R.,3rd Year,BBA,3,4,4,4,4,3,2,4,5,Certification Exams,UI/UX Designer,IT / Software,< 2 hours,Online Courses,Never,Data Analysis,Advanced SQL,5,Lack of resources,Yes
+Divya N.,3rd Year,B.Sc,1,1,3,4,5,5,5,4,1,None,Data Scientist,IT / Software,> 10 hours,Online Courses,Never,Web Development,Time Management,8,Lack of mentorship,Yes
+Sathish P.,1st Year,B.Tech - CSE,3,5,2,4,1,1,1,5,3,Certification Exams,Software Developer,Finance & Banking,5â10 hours,Online Courses,More than 1 year ago,Leadership,Advanced SQL,7,Financial constraints,No
+Karthik Rao,3rd Year,B.Tech - ECE,5,5,3,5,4,5,2,1,5,Internships,Cloud Engineer,Finance & Banking,2â5 hours,Hands-on Projects,6â12 months ago,Communication,Advanced SQL,10,Lack of resources,No
+Swathi Shetty,1st Year,BBA,5,1,5,2,4,1,2,1,4,Certification Exams,Data Scientist,Core Engineering,< 2 hours,Self-study,Never,"Java, Cloud",Public Speaking,8,Lack of time,Yes
+Sandhya Reddy,2nd Year,B.Sc,1,2,4,5,3,3,4,1,3,Online Courses,Cloud Engineer,Healthcare,5â10 hours,Hands-on Projects,6â12 months ago,"Java, Cloud",Public Speaking,9,Lack of mentorship,No
+Suresh Menon,4th Year,MBA,5,1,4,5,1,3,3,4,3,Internships,UI/UX Designer,Healthcare,2â5 hours,Hands-on Projects,More than 1 year ago,"Python, SQL",Public Speaking,10,Lack of time,No
+Lakshmi Menon,4th Year,B.Tech - ECE,1,5,2,4,1,5,3,4,3,Internships,Cloud Engineer,IT / Software,> 10 hours,Online Courses,6â12 months ago,"Java, Cloud",Machine Learning,6,Lack of motivation,No
+Suresh Shetty,1st Year,BBA,4,5,3,1,5,4,5,2,5,Certification Exams,Data Scientist,Healthcare,< 2 hours,Hands-on Projects,6â12 months ago,Web Development,Time Management,4,Lack of resources,No
+Sathish Subramanian,3rd Year,MBA,3,2,5,1,5,1,2,4,5,College Projects,Software Developer,Research & Academia,2â5 hours,Online Courses,6â12 months ago,Communication,Machine Learning,7,Financial constraints,No
+Lakshmi Naidu,4th Year,B.Sc,3,1,4,1,2,1,5,1,1,Certification Exams,Software Developer,IT / Software,2â5 hours,Self-study,More than 1 year ago,Communication,Time Management,7,Lack of time,No
+Divya Reddy,3rd Year,MBA,3,3,4,5,2,2,4,4,5,Online Courses,Data Scientist,Research & Academia,5â10 hours,Self-study,3â6 months ago,"Java, Cloud",Cloud Computing,10,Lack of mentorship,Yes
+Meena Rao,4th Year,B.Sc,3,3,3,5,4,1,4,4,5,Internships,Cloud Engineer,Research & Academia,< 2 hours,Online Courses,3â6 months ago,Communication,Public Speaking,8,Lack of motivation,Yes
+Gayathri Krishnan,2nd Year,MBA,4,3,3,4,3,1,2,1,3,College Projects,UI/UX Designer,Finance & Banking,5â10 hours,Self-study,6â12 months ago,"Java, Cloud",Cloud Computing,9,Lack of resources,No
+Sathish Krishnan,4th Year,B.Tech - CSE,5,1,4,5,4,1,3,4,2,Internships,Cloud Engineer,Core Engineering,< 2 hours,Self-study,6â12 months ago,Data Analysis,Advanced SQL,5,Lack of time,Yes
+Muthu Shetty,3rd Year,B.Tech - ECE,5,4,1,1,1,4,4,1,4,Online Courses,Data Scientist,Core Engineering,< 2 hours,Self-study,Never,"Java, Cloud",Machine Learning,7,Lack of motivation,No
+Hari Pillai,2nd Year,BBA,1,1,4,3,5,1,3,3,1,Internships,UI/UX Designer,Research & Academia,< 2 hours,Group/Peer Learning,6â12 months ago,Communication,Time Management,10,Lack of motivation,No
+Vishnu Naidu,2nd Year,MBA,5,4,1,1,5,1,2,5,5,None,Entrepreneur,IT / Software,> 10 hours,Self-study,More than 1 year ago,"Java, Cloud",Time Management,6,Lack of resources,Yes
+Vignesh Pillai,2nd Year,BBA,1,4,4,3,5,1,2,2,3,Certification Exams,Cloud Engineer,Finance & Banking,2â5 hours,Classroom Workshops,3â6 months ago,Data Analysis,Public Speaking,10,Lack of mentorship,Yes
+Lakshmi Ramu,1st Year,BBA,1,4,2,4,1,3,5,4,1,College Projects,Software Developer,Healthcare,2â5 hours,Classroom Workshops,More than 1 year ago,Web Development,Machine Learning,8,Lack of time,No
+Divya Krishnan,4th Year,B.Tech - CSE,2,2,3,5,4,5,3,3,3,Internships,Software Developer,Finance & Banking,2â5 hours,Self-study,6â12 months ago,"Java, Cloud",Time Management,10,Lack of time,No
+Vignesh Shetty,2nd Year,MBA,1,1,3,4,2,1,4,5,5,Internships,UI/UX Designer,Research & Academia,2â5 hours,Group/Peer Learning,3â6 months ago,Leadership,Machine Learning,9,Lack of time,Yes
+Suresh Subramanian,3rd Year,B.Com,2,3,4,1,1,1,3,1,3,Online Courses,Cloud Engineer,Healthcare,> 10 hours,Classroom Workshops,Never,"Java, Cloud",Time Management,8,Financial constraints,Yes
+Vishnu Rao,3rd Year,BBA,2,1,4,1,3,5,1,3,1,College Projects,Software Developer,Healthcare,5â10 hours,Hands-on Projects,Never,Communication,Time Management,4,Lack of motivation,Yes
+Priya Subramanian,3rd Year,B.Com,2,4,3,5,3,4,5,2,3,Certification Exams,Software Developer,Core Engineering,5â10 hours,Group/Peer Learning,6â12 months ago,Web Development,Advanced SQL,7,Lack of mentorship,Yes
+Meena Pillai,2nd Year,BBA,5,3,4,1,1,5,1,3,5,Certification Exams,Cloud Engineer,Research & Academia,5â10 hours,Group/Peer Learning,More than 1 year ago,Web Development,Time Management,10,Financial constraints,Yes
+Arun Subramanian,4th Year,B.Com,1,2,3,2,3,3,3,3,5,Certification Exams,Data Scientist,Finance & Banking,2â5 hours,Self-study,More than 1 year ago,Leadership,Advanced SQL,3,Lack of mentorship,Yes
+Priya Shetty,4th Year,MBA,3,4,1,4,4,2,4,4,1,Internships,Data Scientist,Healthcare,2â5 hours,Online Courses,Never,Leadership,Cloud Computing,9,Lack of mentorship,No
+Priya Ramu,2nd Year,BBA,1,3,2,4,2,3,4,1,5,None,Software Developer,Research & Academia,5â10 hours,Hands-on Projects,Within 3 months,Data Analysis,Public Speaking,4,Lack of resources,Yes
+Divya Shetty,4th Year,B.Tech - ECE,3,5,1,5,2,5,2,1,2,Internships,Cloud Engineer,Core Engineering,< 2 hours,Group/Peer Learning,3â6 months ago,Communication,Cloud Computing,9,Lack of time,Yes
+Sathish Subramanian,4th Year,B.Tech - ECE,3,2,5,1,4,2,1,5,1,College Projects,Data Scientist,Core Engineering,> 10 hours,Group/Peer Learning,More than 1 year ago,"Python, SQL",Time Management,9,Lack of time,Yes
+Vishnu Subramanian,4th Year,B.Sc,4,2,5,2,2,3,4,1,3,Internships,Cloud Engineer,IT / Software,< 2 hours,Group/Peer Learning,More than 1 year ago,Web Development,Public Speaking,5,Lack of motivation,Yes
+Lakshmi Pillai,2nd Year,B.Sc,1,2,2,5,1,4,5,3,1,Certification Exams,UI/UX Designer,Research & Academia,> 10 hours,Self-study,More than 1 year ago,Leadership,Cloud Computing,5,Lack of motivation,No
+Karthik Naidu,1st Year,B.Sc,4,5,1,1,4,5,3,4,1,Internships,UI/UX Designer,Research & Academia,2â5 hours,Self-study,Never,Communication,Cloud Computing,9,Lack of resources,Yes
+Muthu Rao,2nd Year,MBA,4,4,1,2,2,1,2,5,4,None,UI/UX Designer,Finance & Banking,2â5 hours,Group/Peer Learning,Never,Web Development,Public Speaking,10,Financial constraints,No
+Dinesh Rao,1st Year,B.Sc,4,5,5,2,3,5,3,2,1,Certification Exams,Data Scientist,Core Engineering,> 10 hours,Classroom Workshops,Within 3 months,"Java, Cloud",Time Management,10,Lack of time,No
+Gayathri Rao,3rd Year,B.Tech - ECE,5,5,1,2,1,4,2,4,1,None,Entrepreneur,Research & Academia,5â10 hours,Classroom Workshops,3â6 months ago,Data Analysis,Cloud Computing,9,Lack of time,Yes
+Swathi Iyer,2nd Year,B.Sc,1,2,4,5,4,1,2,5,2,None,Software Developer,Finance & Banking,5â10 hours,Classroom Workshops,Within 3 months,Web Development,Cloud Computing,3,Lack of motivation,No
+Keerthi Subramanian,2nd Year,MBA,5,2,4,4,1,5,5,2,1,College Projects,UI/UX Designer,IT / Software,2â5 hours,Online Courses,6â12 months ago,Web Development,Public Speaking,8,Lack of resources,Yes
+Gayathri Pillai,3rd Year,BBA,4,2,4,5,3,3,2,3,1,College Projects,Entrepreneur,Healthcare,2â5 hours,Self-study,Within 3 months,"Java, Cloud",Time Management,3,Lack of motivation,No
+Dinesh Shetty,3rd Year,MBA,2,3,3,4,1,1,3,5,3,Certification Exams,Software Developer,Research & Academia,< 2 hours,Online Courses,Never,Web Development,Time Management,6,Lack of mentorship,No
+Ravi Menon,2nd Year,MBA,1,4,1,2,5,4,2,2,2,None,Data Scientist,IT / Software,2â5 hours,Classroom Workshops,6â12 months ago,Communication,Machine Learning,7,Financial constraints,No
+Keerthi Pillai,2nd Year,B.Com,5,5,2,3,4,5,2,5,2,Online Courses,Cloud Engineer,Core Engineering,< 2 hours,Hands-on Projects,Never,"Java, Cloud",Advanced SQL,8,Lack of motivation,Yes
+Swathi I.,1st Year,B.Tech - ECE,3,4,3,2,5,1,5,2,1,College Projects,Software Developer,Research & Academia,> 10 hours,Group/Peer Learning,6â12 months ago,"Java, Cloud",Public Speaking,4,Lack of time,No
+Meena S.,3rd Year,B.Tech - ECE,3,4,2,2,4,2,5,1,5,Internships,Software Developer,Research & Academia,> 10 hours,Classroom Workshops,Never,"Python, SQL",Time Management,4,Lack of resources,No
+Karthik K.,2nd Year,B.Sc,4,4,4,2,5,4,1,4,5,College Projects,Data Scientist,Core Engineering,5â10 hours,Classroom Workshops,3â6 months ago,Data Analysis,Cloud Computing,9,Lack of resources,No
+Vishnu R.,4th Year,B.Tech - ECE,3,3,3,3,1,5,4,4,5,Certification Exams,Cloud Engineer,IT / Software,5â10 hours,Group/Peer Learning,Within 3 months,Leadership,Cloud Computing,10,Financial constraints,Yes
+Swathi R.,4th Year,B.Tech - CSE,3,4,4,3,2,3,4,2,4,Internships,Cloud Engineer,Finance & Banking,< 2 hours,Online Courses,More than 1 year ago,"Python, SQL",Machine Learning,3,Financial constraints,Yes
+Muthu M.,2nd Year,B.Tech - CSE,2,1,2,1,5,5,3,4,2,None,UI/UX Designer,IT / Software,< 2 hours,Hands-on Projects,More than 1 year ago,"Python, SQL",Time Management,4,Lack of resources,Yes
+Hari N.,3rd Year,B.Sc,4,4,5,1,1,4,4,4,3,Online Courses,Entrepreneur,Finance & Banking,5â10 hours,Classroom Workshops,6â12 months ago,Communication,Cloud Computing,3,Financial constraints,Yes
+Hari P.,1st Year,B.Sc,5,5,1,3,5,2,3,4,1,Internships,Data Scientist,Research & Academia,2â5 hours,Classroom Workshops,3â6 months ago,Web Development,Machine Learning,8,Lack of motivation,No
+Sandhya I.,4th Year,B.Tech - ECE,1,1,4,5,4,1,4,2,1,Internships,Entrepreneur,IT / Software,< 2 hours,Group/Peer Learning,6â12 months ago,"Java, Cloud",Time Management,3,Financial constraints,Yes
+Muthu R.,4th Year,MBA,5,4,4,2,1,2,1,1,1,Online Courses,Cloud Engineer,Healthcare,< 2 hours,Classroom Workshops,Never,Communication,Cloud Computing,10,Lack of time,Yes
+Ravi R.,3rd Year,MBA,5,4,5,4,1,4,4,4,2,Internships,Cloud Engineer,Finance & Banking,2â5 hours,Classroom Workshops,Never,"Java, Cloud",Machine Learning,7,Lack of time,Yes
+Swathi R.,3rd Year,B.Com,1,1,5,5,2,1,5,3,1,Certification Exams,Software Developer,Research & Academia,5â10 hours,Hands-on Projects,6â12 months ago,Web Development,Cloud Computing,5,Lack of resources,Yes
+Dinesh P.,4th Year,B.Tech - CSE,3,1,3,1,1,1,4,1,2,Online Courses,Cloud Engineer,IT / Software,> 10 hours,Group/Peer Learning,More than 1 year ago,Web Development,Public Speaking,5,Lack of motivation,Yes
+Vishnu I.,1st Year,MBA,2,5,3,3,5,1,1,1,1,Certification Exams,Software Developer,Core Engineering,< 2 hours,Group/Peer Learning,More than 1 year ago,Leadership,Time Management,3,Financial constraints,No
+Lakshmi I.,4th Year,BBA,3,1,1,1,1,2,1,2,4,Online Courses,Cloud Engineer,Research & Academia,> 10 hours,Online Courses,3â6 months ago,Communication,Advanced SQL,3,Lack of motivation,Yes
+Meena M.,4th Year,B.Com,5,2,1,3,3,1,2,2,1,College Projects,Entrepreneur,Healthcare,2â5 hours,Hands-on Projects,6â12 months ago,"Python, SQL",Public Speaking,7,Lack of mentorship,Yes
+Lakshmi S.,3rd Year,MBA,1,4,2,3,5,1,3,3,1,Internships,Cloud Engineer,Healthcare,2â5 hours,Group/Peer Learning,Within 3 months,"Java, Cloud",Machine Learning,3,Lack of mentorship,Yes
+Priya R.,2nd Year,B.Tech - CSE,4,5,2,2,3,2,1,2,4,College Projects,Cloud Engineer,Healthcare,5â10 hours,Online Courses,More than 1 year ago,Data Analysis,Advanced SQL,3,Lack of mentorship,Yes
+Gayathri K.,1st Year,B.Tech - ECE,1,4,5,4,2,1,5,2,4,None,Data Scientist,Research & Academia,> 10 hours,Hands-on Projects,Within 3 months,"Python, SQL",Advanced SQL,10,Lack of mentorship,No
+Praveen R.,4th Year,B.Tech - CSE,1,3,3,2,1,3,2,5,3,College Projects,Software Developer,IT / Software,< 2 hours,Hands-on Projects,6â12 months ago,Web Development,Advanced SQL,3,Lack of resources,No
+Sathish R.,1st Year,B.Com,2,4,2,2,1,5,2,2,4,College Projects,Data Scientist,Research & Academia,< 2 hours,Self-study,More than 1 year ago,"Java, Cloud",Cloud Computing,3,Lack of time,No
+Lakshmi S.,2nd Year,B.Tech - ECE,3,4,4,5,2,5,3,3,1,Internships,Cloud Engineer,Core Engineering,5â10 hours,Online Courses,Within 3 months,"Java, Cloud",Time Management,10,Lack of resources,Yes
+Sathish S.,2nd Year,B.Sc,3,1,4,1,3,2,2,4,1,College Projects,Data Scientist,Research & Academia,2â5 hours,Group/Peer Learning,Never,"Java, Cloud",Cloud Computing,4,Lack of time,Yes
+Vignesh R.,1st Year,B.Com,3,2,4,3,2,5,2,4,3,College Projects,UI/UX Designer,Core Engineering,5â10 hours,Online Courses,More than 1 year ago,Leadership,Public Speaking,4,Financial constraints,No
+Divya M.,3rd Year,B.Com,4,2,3,5,2,5,1,4,2,College Projects,UI/UX Designer,Research & Academia,5â10 hours,Self-study,6â12 months ago,Communication,Cloud Computing,7,Lack of motivation,Yes
+Divya P.,3rd Year,BBA,5,4,3,5,3,2,1,4,2,Internships,Entrepreneur,Finance & Banking,< 2 hours,Classroom Workshops,3â6 months ago,"Java, Cloud",Time Management,3,Financial constraints,No
+Arun M.,2nd Year,B.Tech - CSE,5,4,3,4,4,1,2,4,5,None,UI/UX Designer,Healthcare,2â5 hours,Group/Peer Learning,More than 1 year ago,Leadership,Public Speaking,4,Lack of time,No
+Anitha S.,1st Year,B.Tech - CSE,3,2,2,3,2,3,2,4,5,Online Courses,Data Scientist,IT / Software,> 10 hours,Group/Peer Learning,6â12 months ago,Data Analysis,Machine Learning,4,Lack of motivation,No
+Divya R.,4th Year,MBA,5,1,4,4,1,1,4,2,5,Online Courses,Entrepreneur,Core Engineering,> 10 hours,Classroom Workshops,6â12 months ago,"Java, Cloud",Machine Learning,6,Lack of motivation,Yes
+Sandhya S.,1st Year,MBA,2,1,4,3,4,2,1,2,1,None,Software Developer,Healthcare,> 10 hours,Self-study,3â6 months ago,Leadership,Cloud Computing,7,Lack of resources,Yes
+Lakshmi N.,3rd Year,B.Sc,1,2,2,1,4,3,5,1,2,College Projects,Data Scientist,Finance & Banking,2â5 hours,Hands-on Projects,6â12 months ago,Leadership,Public Speaking,7,Lack of motivation,Yes
+Priya P.,3rd Year,MBA,1,4,2,1,2,1,5,5,2,Online Courses,UI/UX Designer,Core Engineering,> 10 hours,Online Courses,3â6 months ago,"Java, Cloud",Machine Learning,6,Lack of resources,Yes
+Arun R.,3rd Year,B.Tech - CSE,5,1,4,2,4,1,4,2,3,Internships,Software Developer,Finance & Banking,> 10 hours,Hands-on Projects,More than 1 year ago,Communication,Cloud Computing,7,Lack of resources,Yes
+Swathi N.,4th Year,B.Sc,5,1,1,2,2,2,1,3,2,None,Software Developer,Healthcare,5â10 hours,Self-study,3â6 months ago,Communication,Cloud Computing,4,Lack of motivation,No
+Vishnu M.,3rd Year,B.Sc,5,4,5,4,2,3,2,1,2,Online Courses,Entrepreneur,Finance & Banking,2â5 hours,Self-study,Never,"Python, SQL",Public Speaking,10,Financial constraints,No
+Swathi M.,2nd Year,B.Tech - ECE,4,2,3,4,3,2,3,1,3,None,Entrepreneur,IT / Software,2â5 hours,Classroom Workshops,3â6 months ago,Leadership,Time Management,5,Lack of motivation,No
+Meena R.,4th Year,B.Tech - CSE,1,2,3,5,1,4,4,3,1,Certification Exams,Data Scientist,IT / Software,> 10 hours,Hands-on Projects,6â12 months ago,Data Analysis,Time Management,7,Financial constraints,Yes
+Gayathri R.,3rd Year,MBA,1,2,3,2,3,2,1,2,5,Certification Exams,Software Developer,Core Engineering,5â10 hours,Online Courses,More than 1 year ago,"Java, Cloud",Advanced SQL,3,Lack of mentorship,No
+Anitha N.,2nd Year,MBA,3,1,1,5,4,2,1,4,5,College Projects,UI/UX Designer,Healthcare,> 10 hours,Hands-on Projects,More than 1 year ago,Data Analysis,Public Speaking,7,Lack of time,Yes
+Lakshmi R.,2nd Year,BBA,2,1,2,2,1,4,3,4,4,Online Courses,UI/UX Designer,Finance & Banking,5â10 hours,Online Courses,6â12 months ago,"Python, SQL",Machine Learning,3,Financial constraints,Yes
+Gayathri P.,4th Year,MBA,5,3,3,5,5,2,3,3,3,College Projects,Entrepreneur,Core Engineering,2â5 hours,Group/Peer Learning,More than 1 year ago,Web Development,Advanced SQL,5,Financial constraints,Yes
+Anitha M.,2nd Year,B.Tech - ECE,2,5,4,1,3,2,4,4,3,Internships,Cloud Engineer,IT / Software,> 10 hours,Classroom Workshops,6â12 months ago,"Java, Cloud",Advanced SQL,10,Lack of motivation,No
+Sandhya N.,4th Year,B.Sc,4,1,4,2,5,5,4,1,1,Online Courses,Data Scientist,Core Engineering,5â10 hours,Online Courses,More than 1 year ago,"Python, SQL",Time Management,5,Lack of resources,No
+Priya S.,1st Year,B.Sc,4,5,2,3,4,5,3,4,3,Internships,Software Developer,IT / Software,5â10 hours,Self-study,More than 1 year ago,"Python, SQL",Public Speaking,9,Financial constraints,Yes
+Swathi I.,4th Year,B.Tech - CSE,3,4,4,1,3,4,4,1,4,None,Cloud Engineer,Healthcare,5â10 hours,Hands-on Projects,Never,Communication,Advanced SQL,4,Lack of resources,No
+Lakshmi R.,3rd Year,B.Tech - ECE,5,1,3,2,1,1,4,1,4,Internships,Software Developer,IT / Software,5â10 hours,Hands-on Projects,3â6 months ago,"Java, Cloud",Machine Learning,10,Financial constraints,Yes
+Anitha P.,3rd Year,B.Com,2,3,2,1,1,5,1,3,4,Online Courses,Software Developer,IT / Software,2â5 hours,Group/Peer Learning,Within 3 months,Web Development,Public Speaking,7,Lack of mentorship,Yes
+Meena K.,1st Year,B.Sc,5,4,2,5,5,3,3,1,1,Online Courses,Software Developer,Research & Academia,5â10 hours,Self-study,6â12 months ago,"Python, SQL",Public Speaking,7,Lack of time,No
+Swathi M.,3rd Year,BBA,1,5,4,3,3,1,5,5,2,None,Data Scientist,Finance & Banking,5â10 hours,Self-study,3â6 months ago,Web Development,Time Management,6,Lack of time,No
+Karthik S.,3rd Year,BBA,1,2,4,3,5,1,2,2,5,Certification Exams,UI/UX Designer,IT / Software,< 2 hours,Hands-on Projects,Within 3 months,Web Development,Cloud Computing,3,Lack of resources,No
+Dinesh M.,4th Year,B.Com,1,5,3,3,1,5,3,4,2,None,Entrepreneur,Finance & Banking,5â10 hours,Classroom Workshops,Within 3 months,Leadership,Machine Learning,4,Lack of mentorship,Yes
+Praveen R.,3rd Year,BBA,5,1,4,4,2,3,2,3,4,None,Cloud Engineer,IT / Software,< 2 hours,Self-study,Never,"Java, Cloud",Public Speaking,5,Lack of resources,No
+Ravi S.,4th Year,BBA,5,5,4,1,4,3,1,4,4,Online Courses,Software Developer,Healthcare,2â5 hours,Hands-on Projects,More than 1 year ago,Web Development,Cloud Computing,8,Lack of resources,No
+Keerthi R.,4th Year,B.Sc,3,2,3,4,3,3,4,5,2,Online Courses,UI/UX Designer,Research & Academia,2â5 hours,Group/Peer Learning,More than 1 year ago,"Python, SQL",Time Management,9,Lack of resources,No
+Sandhya K.,1st Year,MBA,1,2,5,1,1,4,1,3,3,Certification Exams,UI/UX Designer,IT / Software,2â5 hours,Group/Peer Learning,3â6 months ago,Data Analysis,Cloud Computing,9,Lack of time,No
+Suresh S.,3rd Year,B.Tech - CSE,2,1,3,4,1,2,1,4,3,Online Courses,Entrepreneur,Core Engineering,< 2 hours,Self-study,3â6 months ago,Data Analysis,Public Speaking,9,Financial constraints,Yes
+Hari S.,4th Year,B.Tech - CSE,5,1,4,3,4,5,4,4,2,Internships,Entrepreneur,Finance & Banking,5â10 hours,Self-study,More than 1 year ago,"Python, SQL",Advanced SQL,5,Lack of mentorship,No
+Arun P.,3rd Year,B.Tech - ECE,4,4,1,5,3,2,3,3,2,Certification Exams,Data Scientist,IT / Software,5â10 hours,Group/Peer Learning,More than 1 year ago,Communication,Public Speaking,7,Lack of motivation,No
+Sathish K.,4th Year,BBA,2,5,3,1,3,3,1,1,1,Internships,UI/UX Designer,Finance & Banking,5â10 hours,Self-study,Within 3 months,"Java, Cloud",Public Speaking,6,Lack of time,Yes
+Priya P.,1st Year,B.Sc,5,5,4,4,4,1,2,1,4,Certification Exams,Entrepreneur,Finance & Banking,5â10 hours,Group/Peer Learning,More than 1 year ago,Web Development,Cloud Computing,3,Financial constraints,No
+Lakshmi R.,2nd Year,B.Sc,5,4,3,5,4,1,3,1,4,Online Courses,Entrepreneur,Research & Academia,> 10 hours,Online Courses,3â6 months ago,Data Analysis,Advanced SQL,10,Lack of time,Yes
+Ravi R.,1st Year,B.Tech - CSE,5,3,5,3,2,1,5,4,3,Online Courses,Cloud Engineer,Healthcare,2â5 hours,Self-study,Within 3 months,Leadership,Cloud Computing,3,Lack of motivation,No
+Vignesh S.,4th Year,MBA,4,2,2,2,2,4,3,4,4,Online Courses,UI/UX Designer,Healthcare,< 2 hours,Group/Peer Learning,3â6 months ago,Communication,Public Speaking,4,Lack of motivation,Yes
+Vignesh R.,4th Year,B.Tech - ECE,5,5,5,1,1,5,3,2,3,College Projects,Data Scientist,Healthcare,< 2 hours,Hands-on Projects,Within 3 months,"Python, SQL",Advanced SQL,7,Lack of resources,Yes
+Anitha S.,4th Year,B.Sc,4,4,4,3,4,1,2,5,3,Online Courses,UI/UX Designer,Research & Academia,2â5 hours,Group/Peer Learning,6â12 months ago,Web Development,Advanced SQL,8,Lack of motivation,Yes
+Sandhya S.,4th Year,B.Tech - ECE,4,3,2,2,5,1,1,4,1,Internships,UI/UX Designer,Core Engineering,5â10 hours,Online Courses,Within 3 months,"Java, Cloud",Advanced SQL,8,Lack of resources,No
+Sandhya R.,2nd Year,BBA,1,2,5,4,2,3,5,5,4,College Projects,UI/UX Designer,Finance & Banking,< 2 hours,Hands-on Projects,More than 1 year ago,Data Analysis,Time Management,10,Financial constraints,Yes
+Anitha S.,1st Year,B.Tech - ECE,5,3,3,4,2,1,2,1,3,College Projects,Software Developer,IT / Software,< 2 hours,Self-study,More than 1 year ago,Web Development,Cloud Computing,3,Lack of time,No
+Vignesh S.,1st Year,B.Tech - ECE,2,2,3,3,4,5,4,5,4,Internships,UI/UX Designer,IT / Software,< 2 hours,Group/Peer Learning,Never,Data Analysis,Time Management,6,Lack of mentorship,Yes
+Praveen R.,1st Year,B.Tech - ECE,3,4,2,1,1,3,1,5,3,Internships,Software Developer,Core Engineering,< 2 hours,Online Courses,Within 3 months,Leadership,Public Speaking,10,Financial constraints,Yes
+Arun S.,4th Year,B.Com,3,5,2,5,2,1,4,5,5,None,Entrepreneur,Healthcare,2â5 hours,Group/Peer Learning,6â12 months ago,Leadership,Machine Learning,4,Lack of time,No
+Gayathri P.,4th Year,B.Sc,1,4,3,4,5,3,1,2,2,College Projects,UI/UX Designer,Core Engineering,> 10 hours,Classroom Workshops,3â6 months ago,Leadership,Cloud Computing,9,Lack of resources,No
+Karthik P.,1st Year,MBA,4,5,1,2,5,1,4,1,2,Online Courses,Cloud Engineer,Finance & Banking,> 10 hours,Classroom Workshops,Never,Communication,Public Speaking,4,Financial constraints,Yes
+Suresh R.,3rd Year,B.Tech - ECE,2,4,4,5,5,5,1,2,5,Internships,UI/UX Designer,Research & Academia,2â5 hours,Online Courses,Never,"Java, Cloud",Machine Learning,10,Lack of resources,No
+Vishnu N.,4th Year,B.Com,4,1,1,3,5,3,3,2,5,College Projects,Cloud Engineer,IT / Software,2â5 hours,Self-study,3â6 months ago,Leadership,Machine Learning,8,Lack of resources,No
+Swathi R.,3rd Year,B.Tech - ECE,3,5,3,2,5,2,1,2,4,College Projects,Data Scientist,Healthcare,< 2 hours,Group/Peer Learning,Within 3 months,"Java, Cloud",Time Management,10,Lack of mentorship,Yes
+Vishnu R.,1st Year,B.Com,2,1,5,3,5,5,1,2,3,College Projects,Cloud Engineer,Core Engineering,< 2 hours,Self-study,Never,"Java, Cloud",Public Speaking,8,Lack of mentorship,Yes
+Ravi R.,3rd Year,B.Sc,3,4,1,2,5,4,1,1,1,None,Data Scientist,IT / Software,2â5 hours,Classroom Workshops,6â12 months ago,"Java, Cloud",Cloud Computing,4,Financial constraints,Yes
+Anitha R.,3rd Year,BBA,4,3,4,1,4,3,4,1,4,Internships,Data Scientist,IT / Software,5â10 hours,Classroom Workshops,6â12 months ago,"Java, Cloud",Cloud Computing,4,Lack of resources,No
+Vignesh N.,2nd Year,B.Com,4,5,2,2,1,4,3,3,1,Internships,Cloud Engineer,Research & Academia,5â10 hours,Self-study,More than 1 year ago,Communication,Time Management,10,Lack of motivation,Yes
+Muthu R.,1st Year,BBA,5,2,5,1,5,2,5,1,3,Internships,Cloud Engineer,Finance & Banking,5â10 hours,Online Courses,More than 1 year ago,Web Development,Time Management,7,Lack of resources,Yes
+Karthik P.,1st Year,B.Tech - CSE,1,3,1,4,4,2,1,1,1,Internships,Cloud Engineer,IT / Software,5â10 hours,Self-study,6â12 months ago,Web Development,Public Speaking,7,Financial constraints,No
+Gayathri N.,2nd Year,B.Tech - CSE,1,3,1,2,2,4,2,3,1,Internships,Entrepreneur,Core Engineering,> 10 hours,Classroom Workshops,Never,"Java, Cloud",Advanced SQL,3,Lack of resources,No
+Vishnu P.,1st Year,B.Tech - ECE,2,5,5,5,3,1,3,3,5,Internships,Entrepreneur,Healthcare,2â5 hours,Self-study,3â6 months ago,Leadership,Public Speaking,10,Lack of motivation,No
+Vishnu R.,3rd Year,MBA,4,4,1,1,3,2,2,3,5,Internships,Entrepreneur,Core Engineering,5â10 hours,Online Courses,6â12 months ago,Leadership,Time Management,7,Financial constraints,Yes
+Meena R.,2nd Year,MBA,5,5,2,1,4,4,3,4,5,Certification Exams,Data Scientist,IT / Software,5â10 hours,Group/Peer Learning,3â6 months ago,"Java, Cloud",Time Management,8,Lack of resources,No
+Divya K.,1st Year,MBA,1,1,4,3,2,1,2,3,4,Certification Exams,Software Developer,IT / Software,2â5 hours,Online Courses,More than 1 year ago,Communication,Advanced SQL,4,Lack of time,Yes
+Sandhya P.,1st Year,MBA,1,1,2,5,4,1,5,2,4,Online Courses,Data Scientist,Healthcare,> 10 hours,Group/Peer Learning,Never,Web Development,Cloud Computing,4,Lack of mentorship,Yes
+Anitha R.,4th Year,B.Tech - ECE,2,5,1,2,5,5,5,1,2,College Projects,Data Scientist,Research & Academia,< 2 hours,Online Courses,More than 1 year ago,Communication,Machine Learning,9,Lack of motivation,Yes
+Suresh R.,4th Year,B.Tech - CSE,5,4,2,4,2,5,3,1,5,Online Courses,UI/UX Designer,Healthcare,< 2 hours,Hands-on Projects,6â12 months ago,Communication,Machine Learning,10,Lack of resources,No
+Sandhya R.,1st Year,B.Tech - ECE,2,1,2,1,4,5,4,4,4,College Projects,UI/UX Designer,IT / Software,5â10 hours,Self-study,6â12 months ago,"Java, Cloud",Cloud Computing,8,Financial constraints,Yes
+Muthu R.,3rd Year,B.Sc,5,5,4,1,5,3,3,2,3,None,Entrepreneur,Healthcare,2â5 hours,Self-study,6â12 months ago,"Python, SQL",Public Speaking,5,Lack of resources,No
+Vishnu P.,2nd Year,BBA,1,2,1,2,4,2,2,1,3,Certification Exams,Software Developer,IT / Software,5â10 hours,Classroom Workshops,Never,"Java, Cloud",Cloud Computing,10,Financial constraints,No
+Ravi P.,2nd Year,B.Com,4,3,3,4,4,4,2,2,3,Online Courses,Entrepreneur,Core Engineering,2â5 hours,Hands-on Projects,6â12 months ago,"Java, Cloud",Advanced SQL,5,Lack of time,Yes
+Swathi S.,3rd Year,MBA,4,3,4,1,1,1,4,1,3,Internships,Data Scientist,Healthcare,2â5 hours,Group/Peer Learning,Within 3 months,"Java, Cloud",Advanced SQL,10,Lack of resources,Yes
+Hari M.,1st Year,BBA,5,2,2,4,3,1,4,4,3,Certification Exams,Entrepreneur,Core Engineering,< 2 hours,Classroom Workshops,Never,Web Development,Cloud Computing,8,Lack of time,No
+Divya M.,2nd Year,BBA,4,1,2,4,3,1,3,4,3,College Projects,Data Scientist,Core Engineering,> 10 hours,Self-study,3â6 months ago,Leadership,Machine Learning,7,Lack of time,No
+Gayathri S.,2nd Year,B.Tech - ECE,1,1,4,3,5,3,5,2,2,Internships,Cloud Engineer,Healthcare,< 2 hours,Hands-on Projects,Never,"Java, Cloud",Time Management,3,Lack of resources,Yes
+Praveen S.,1st Year,B.Tech - ECE,1,5,1,1,5,5,5,5,5,Certification Exams,Cloud Engineer,Core Engineering,< 2 hours,Hands-on Projects,3â6 months ago,Leadership,Time Management,9,Lack of resources,Yes
+Keerthi P.,3rd Year,BBA,1,2,1,1,2,1,2,5,2,Online Courses,Software Developer,Finance & Banking,2â5 hours,Online Courses,Never,"Java, Cloud",Advanced SQL,10,Lack of motivation,No
+Ravi S.,2nd Year,B.Sc,2,3,3,5,5,2,4,2,3,None,Cloud Engineer,IT / Software,> 10 hours,Classroom Workshops,Never,Leadership,Public Speaking,6,Financial constraints,No
+Swathi N.,1st Year,B.Com,2,2,2,5,5,2,3,5,4,Certification Exams,Data Scientist,Core Engineering,2â5 hours,Online Courses,Within 3 months,Web Development,Time Management,7,Lack of time,No
+Keerthi S.,3rd Year,B.Com,4,5,2,2,2,3,5,2,5,Internships,Cloud Engineer,Core Engineering,2â5 hours,Online Courses,3â6 months ago,Communication,Time Management,4,Lack of resources,No
+Arun K.,1st Year,MBA,2,3,3,1,1,3,1,1,3,Internships,Software Developer,Core Engineering,< 2 hours,Hands-on Projects,Never,Leadership,Time Management,10,Financial constraints,No
+Ravi N.,4th Year,MBA,5,3,4,3,1,3,1,2,2,Certification Exams,UI/UX Designer,Finance & Banking,5â10 hours,Group/Peer Learning,6â12 months ago,Leadership,Public Speaking,7,Lack of resources,Yes
+Muthu M.,4th Year,BBA,1,1,5,3,4,5,2,3,3,Online Courses,Data Scientist,Research & Academia,2â5 hours,Group/Peer Learning,More than 1 year ago,"Python, SQL",Public Speaking,3,Financial constraints,Yes
+Lakshmi S.,2nd Year,MBA,1,5,4,3,5,5,2,3,2,Online Courses,Cloud Engineer,IT / Software,> 10 hours,Hands-on Projects,6â12 months ago,"Python, SQL",Public Speaking,9,Lack of motivation,No
+Lakshmi S.,4th Year,B.Tech - CSE,1,5,2,2,1,3,5,1,2,Internships,Data Scientist,Research & Academia,< 2 hours,Self-study,6â12 months ago,"Python, SQL",Time Management,4,Lack of time,No
+Ravi P.,2nd Year,B.Tech - ECE,4,5,5,5,2,2,2,3,2,Certification Exams,Data Scientist,IT / Software,2â5 hours,Classroom Workshops,6â12 months ago,Web Development,Cloud Computing,3,Lack of mentorship,Yes
+Sathish N.,1st Year,B.Com,5,2,5,5,3,3,5,3,1,College Projects,Cloud Engineer,IT / Software,2â5 hours,Classroom Workshops,3â6 months ago,"Python, SQL",Public Speaking,5,Financial constraints,Yes
+Vishnu R.,2nd Year,MBA,3,4,5,2,4,2,3,2,3,Internships,Data Scientist,Research & Academia,< 2 hours,Hands-on Projects,Never,Web Development,Time Management,7,Lack of resources,No
+Sandhya K.,2nd Year,B.Tech - ECE,5,1,4,1,1,4,5,5,3,Certification Exams,Software Developer,Healthcare,2â5 hours,Self-study,Within 3 months,Communication,Advanced SQL,10,Lack of resources,No
+Suresh P.,3rd Year,B.Com,5,3,1,3,5,4,5,2,5,None,Data Scientist,Finance & Banking,< 2 hours,Online Courses,More than 1 year ago,"Java, Cloud",Public Speaking,7,Financial constraints,No
+Priya R.,2nd Year,BBA,4,2,1,2,2,1,1,2,5,Internships,Data Scientist,Core Engineering,2â5 hours,Online Courses,Within 3 months,Data Analysis,Advanced SQL,7,Lack of time,Yes
+Sandhya M.,4th Year,B.Sc,2,5,3,3,2,1,5,4,1,None,Software Developer,Research & Academia,> 10 hours,Group/Peer Learning,Never,Web Development,Time Management,4,Financial constraints,Yes
+Lakshmi R.,4th Year,B.Com,2,2,4,3,3,2,4,1,1,None,Cloud Engineer,Core Engineering,< 2 hours,Group/Peer Learning,Within 3 months,Data Analysis,Time Management,3,Lack of motivation,Yes
+Suresh I.,1st Year,B.Tech - ECE,3,3,1,3,4,3,3,2,2,Internships,Cloud Engineer,IT / Software,5â10 hours,Group/Peer Learning,Never,"Python, SQL",Time Management,10,Financial constraints,Yes
+Vishnu P.,4th Year,B.Tech - CSE,5,2,2,3,3,1,5,2,5,College Projects,Entrepreneur,Research & Academia,> 10 hours,Group/Peer Learning,Never,Leadership,Machine Learning,8,Lack of time,No
+Keerthi N.,4th Year,B.Tech - ECE,1,2,3,3,4,3,3,4,3,College Projects,Entrepreneur,IT / Software,> 10 hours,Classroom Workshops,Never,Leadership,Public Speaking,5,Financial constraints,No
+Praveen R.,3rd Year,B.Com,5,3,1,4,3,5,4,4,4,None,Entrepreneur,IT / Software,5â10 hours,Self-study,More than 1 year ago,Communication,Advanced SQL,9,Lack of resources,Yes
+Anitha S.,4th Year,B.Com,5,4,4,1,1,1,2,1,1,None,Cloud Engineer,Research & Academia,5â10 hours,Self-study,Within 3 months,Data Analysis,Cloud Computing,3,Lack of mentorship,No
+Suresh N.,4th Year,B.Com,2,2,1,2,4,2,2,1,3,None,Cloud Engineer,Core Engineering,2â5 hours,Hands-on Projects,Within 3 months,Data Analysis,Cloud Computing,3,Lack of resources,Yes
+Vishnu R.,4th Year,BBA,2,5,3,3,4,2,4,5,4,None,Software Developer,Research & Academia,2â5 hours,Hands-on Projects,3â6 months ago,Data Analysis,Time Management,6,Lack of motivation,Yes
+Sandhya P.,4th Year,B.Tech - CSE,4,5,1,4,1,5,1,1,2,Certification Exams,Data Scientist,IT / Software,5â10 hours,Classroom Workshops,Within 3 months,Communication,Time Management,8,Financial constraints,Yes
+Praveen K.,1st Year,B.Sc,1,1,4,1,2,3,4,4,2,Internships,Software Developer,IT / Software,2â5 hours,Self-study,Within 3 months,Leadership,Public Speaking,10,Lack of motivation,Yes
+Priya P.,1st Year,B.Com,1,4,5,5,2,1,5,4,5,College Projects,Cloud Engineer,IT / Software,< 2 hours,Classroom Workshops,6â12 months ago,Data Analysis,Advanced SQL,8,Lack of resources,No
+Vishnu S.,3rd Year,B.Tech - CSE,5,1,3,2,4,4,3,2,2,Certification Exams,Data Scientist,Core Engineering,< 2 hours,Online Courses,More than 1 year ago,Communication,Cloud Computing,7,Lack of motivation,No
+Praveen M.,2nd Year,B.Tech - ECE,3,4,1,4,2,5,1,2,1,None,Software Developer,Core Engineering,5â10 hours,Self-study,3â6 months ago,Data Analysis,Time Management,5,Lack of motivation,Yes
+Suresh R.,4th Year,B.Tech - CSE,2,2,1,4,5,5,2,4,5,None,Cloud Engineer,Research & Academia,> 10 hours,Group/Peer Learning,6â12 months ago,"Python, SQL",Advanced SQL,7,Lack of time,Yes
+Vignesh R.,4th Year,BBA,3,2,1,5,1,4,1,3,3,None,Software Developer,Research & Academia,2â5 hours,Group/Peer Learning,6â12 months ago,"Java, Cloud",Machine Learning,7,Lack of mentorship,No
+Sathish S.,4th Year,BBA,3,5,4,4,2,2,5,5,5,Internships,Data Scientist,Finance & Banking,< 2 hours,Self-study,More than 1 year ago,Leadership,Advanced SQL,8,Lack of resources,No
+Sathish S.,1st Year,B.Tech - CSE,1,4,5,4,1,2,4,4,4,None,Data Scientist,IT / Software,< 2 hours,Self-study,More than 1 year ago,Web Development,Machine Learning,3,Lack of mentorship,Yes
+Gayathri R.,3rd Year,B.Tech - ECE,2,1,1,3,1,2,3,2,3,Internships,Cloud Engineer,IT / Software,< 2 hours,Group/Peer Learning,Never,Communication,Cloud Computing,9,Financial constraints,No
+Divya S.,4th Year,B.Tech - CSE,1,2,5,3,1,4,5,1,4,College Projects,Cloud Engineer,Core Engineering,> 10 hours,Group/Peer Learning,Never,Data Analysis,Public Speaking,7,Lack of resources,Yes
+Divya S.,4th Year,MBA,2,5,5,5,4,3,1,2,3,None,Data Scientist,IT / Software,< 2 hours,Self-study,Never,Leadership,Cloud Computing,7,Financial constraints,Yes
+Suresh R.,4th Year,B.Tech - ECE,5,5,1,2,1,5,5,4,1,Online Courses,UI/UX Designer,Research & Academia,5â10 hours,Online Courses,6â12 months ago,"Python, SQL",Time Management,5,Lack of resources,No
+Karthik K.,3rd Year,BBA,4,5,1,5,3,1,1,2,3,Internships,Software Developer,Healthcare,> 10 hours,Classroom Workshops,Never,Data Analysis,Time Management,7,Lack of motivation,Yes
+Priya N.,2nd Year,B.Tech - ECE,2,4,1,2,3,5,2,2,1,None,Cloud Engineer,Healthcare,< 2 hours,Hands-on Projects,Never,Data Analysis,Time Management,4,Lack of mentorship,No
+Sathish R.,2nd Year,B.Com,3,2,1,4,2,1,5,3,5,None,Software Developer,Research & Academia,2â5 hours,Online Courses,Never,Leadership,Time Management,3,Lack of resources,No
+Hari M.,1st Year,BBA,5,2,2,5,2,2,3,3,4,Certification Exams,Entrepreneur,Finance & Banking,5â10 hours,Classroom Workshops,More than 1 year ago,Leadership,Public Speaking,4,Lack of motivation,Yes
+Ravi S.,4th Year,B.Tech - ECE,4,1,3,3,1,4,3,3,2,Internships,UI/UX Designer,IT / Software,2â5 hours,Classroom Workshops,3â6 months ago,Web Development,Time Management,7,Lack of time,No
+Gayathri S.,3rd Year,B.Sc,3,5,3,2,5,1,5,4,3,Internships,Data Scientist,Research & Academia,< 2 hours,Self-study,Within 3 months,"Python, SQL",Cloud Computing,6,Lack of time,No
+Karthik R.,1st Year,MBA,1,1,5,2,5,4,3,4,2,College Projects,Cloud Engineer,IT / Software,< 2 hours,Group/Peer Learning,Never,Leadership,Time Management,3,Lack of time,Yes
+Divya S.,2nd Year,BBA,3,5,2,3,3,5,1,2,1,Certification Exams,Data Scientist,Finance & Banking,2â5 hours,Online Courses,3â6 months ago,Communication,Time Management,10,Financial constraints,Yes
+Meena R.,1st Year,B.Sc,5,2,2,4,5,2,1,4,5,College Projects,Entrepreneur,Core Engineering,> 10 hours,Self-study,More than 1 year ago,Web Development,Time Management,6,Lack of time,Yes
+Praveen K.,4th Year,B.Com,4,4,4,3,1,4,5,5,4,Internships,Entrepreneur,Core Engineering,2â5 hours,Group/Peer Learning,Within 3 months,Web Development,Advanced SQL,7,Lack of motivation,Yes
+Vishnu R.,4th Year,B.Tech - ECE,1,1,3,3,1,1,1,5,4,College Projects,UI/UX Designer,Finance & Banking,> 10 hours,Online Courses,Within 3 months,Communication,Time Management,7,Lack of motivation,No
+Hari R.,1st Year,B.Tech - CSE,5,3,4,3,3,2,1,1,5,Certification Exams,UI/UX Designer,Research & Academia,> 10 hours,Group/Peer Learning,Within 3 months,Data Analysis,Cloud Computing,7,Lack of mentorship,No
+Sandhya M.,3rd Year,B.Com,4,2,1,4,5,2,1,5,5,Internships,UI/UX Designer,Core Engineering,2â5 hours,Group/Peer Learning,6â12 months ago,Leadership,Cloud Computing,10,Lack of motivation,No
+Divya R.,4th Year,B.Sc,2,5,3,1,4,5,4,2,4,College Projects,UI/UX Designer,Healthcare,2â5 hours,Self-study,6â12 months ago,Leadership,Public Speaking,9,Lack of resources,No
+Sathish R.,3rd Year,B.Com,3,5,5,4,3,3,5,4,5,Internships,UI/UX Designer,Core Engineering,5â10 hours,Group/Peer Learning,Within 3 months,Leadership,Cloud Computing,3,Lack of mentorship,Yes
+Karthik K.,1st Year,B.Tech - CSE,3,1,1,1,5,5,4,4,5,College Projects,UI/UX Designer,Core Engineering,5â10 hours,Group/Peer Learning,More than 1 year ago,"Python, SQL",Machine Learning,3,Financial constraints,No
+Lakshmi K.,4th Year,B.Sc,1,4,2,3,3,4,5,2,2,Internships,Software Developer,Healthcare,5â10 hours,Hands-on Projects,Within 3 months,"Java, Cloud",Cloud Computing,6,Lack of motivation,Yes
+Arun P.,2nd Year,B.Sc,4,1,2,1,2,2,4,1,1,College Projects,Entrepreneur,Finance & Banking,2â5 hours,Classroom Workshops,Never,Data Analysis,Time Management,6,Lack of motivation,Yes
+Hari S.,4th Year,B.Sc,2,1,3,5,4,2,2,2,3,Online Courses,Entrepreneur,Healthcare,< 2 hours,Hands-on Projects,3â6 months ago,"Python, SQL",Machine Learning,4,Financial constraints,Yes
+Lakshmi N.,1st Year,B.Sc,2,2,2,5,5,5,2,2,5,Certification Exams,UI/UX Designer,Core Engineering,5â10 hours,Classroom Workshops,Within 3 months,Leadership,Public Speaking,9,Lack of time,Yes
+Lakshmi N.,2nd Year,MBA,5,5,4,4,4,3,2,1,1,None,Entrepreneur,Finance & Banking,5â10 hours,Online Courses,Never,"Python, SQL",Machine Learning,8,Lack of resources,No
+Suresh S.,1st Year,B.Tech - ECE,1,1,4,4,1,4,3,2,2,Internships,Cloud Engineer,Healthcare,< 2 hours,Self-study,Within 3 months,Communication,Advanced SQL,7,Lack of mentorship,No
+Gayathri M.,1st Year,B.Com,2,1,3,4,4,3,2,2,4,None,Software Developer,IT / Software,< 2 hours,Online Courses,3â6 months ago,Web Development,Advanced SQL,5,Lack of motivation,Yes
+Arun R.,2nd Year,B.Com,4,3,4,4,4,4,4,5,3,Internships,Entrepreneur,IT / Software,> 10 hours,Online Courses,Never,Web Development,Cloud Computing,9,Lack of motivation,Yes
