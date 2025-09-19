@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
 
 st.set_page_config(page_title="Skill Gap Analyser", layout="wide")
 st.title("🔍 Skill Gap Analyser (Flexible CSV with Charts)")
@@ -45,30 +44,20 @@ if uploaded_file:
 
             # 1. Desired Role distribution
             st.subheader("Distribution of Desired Roles")
-            fig, ax = plt.subplots()
-            processed_df["Desired Role"].value_counts().plot(kind="bar", ax=ax)
-            ax.set_xlabel("Desired Roles")
-            ax.set_ylabel("Count")
-            st.pyplot(fig)
+            st.bar_chart(processed_df["Desired Role"].value_counts())
 
             # 2. Skills frequency
             st.subheader("Most Common Skills")
             skill_series = pd.Series(all_skills)
-            fig2, ax2 = plt.subplots()
-            skill_series.value_counts().head(10).plot(kind="barh", ax=ax2)
-            ax2.set_xlabel("Count")
-            ax2.set_ylabel("Skills")
-            st.pyplot(fig2)
+            st.bar_chart(skill_series.value_counts().head(10))
 
-            # 3. Current vs Desired role pie chart
-            st.subheader("Current vs Desired Roles (Pie)")
-            role_counts = processed_df["Current Role"].value_counts().add(
-                processed_df["Desired Role"].value_counts(), fill_value=0
-            )
-            fig3, ax3 = plt.subplots()
-            role_counts.plot(kind="pie", autopct="%1.1f%%", ax=ax3)
-            ax3.set_ylabel("")
-            st.pyplot(fig3)
+            # 3. Current vs Desired role comparison
+            st.subheader("Current vs Desired Roles")
+            role_counts = pd.DataFrame({
+                "Current Role": processed_df["Current Role"].value_counts(),
+                "Desired Role": processed_df["Desired Role"].value_counts()
+            }).fillna(0)
+            st.line_chart(role_counts)
 
         except Exception as e:
             st.error(f"⚠️ Error processing file: {e}")
