@@ -1,94 +1,115 @@
+# skillgap_analyser_streamlit.py
+
 import streamlit as st
 import pandas as pd
+import numpy as np
+import pickle
+import plotly.graph_objects as go
 
-st.set_page_config(page_title="Skill Gap Analyser", layout="wide")
-st.title("🔍 Universal Skill Gap Analyser")
+# ----------------------------
+# Load ML model
+# ----------------------------
+# Make sure your model is saved as 'skillgap_model.pkl'
+with open("skillgap_model.pkl", "rb") as f:
+    model = pickle.load(f)
 
-# ---------------------------
-# Step 1: Upload CSV
-# ---------------------------
-uploaded_file = st.file_uploader("📂 Upload your dataset (CSV)", type=["csv"])
+# ----------------------------
+# Streamlit UI
+# ----------------------------
+st.set_page_config(page_title="Skillgap Analyser", layout="wide")
+st.title("Skillgap Analyser 🧠")
+st.markdown("""
+Upload a CSV file with skills data and enter your details to analyze your skill gap.
+""")
 
-if uploaded_file:
+# ----------------------------
+# Step 1: CSV Upload
+# ----------------------------
+st.header("Step 1: Upload CSV")
+uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
+
+if uploaded_file is not None:
     df = pd.read_csv(uploaded_file)
-    st.write("### 📊 Preview of Dataset")
+    st.success("CSV uploaded successfully!")
     st.dataframe(df.head())
 
-    # ---------------------------
-    # Step 2: Map Columns
-    # ---------------------------
-    st.subheader("🗂️ Map Your Columns")
-    role_col = st.selectbox("Select column for Current Role", df.columns)
-    desired_col = st.selectbox("Select column for Desired Role", df.columns)
-    skills_col = st.selectbox("Select column for Skills (comma separated)", df.columns)
+    # Automatically detect skill columns (excluding name, experience, role)
+    skill_columns = [col for col in df.columns if col.lower() not in ["name", "experience", "role"]]
 
-    # ---------------------------
-    # Step 3: Charts
-    # ---------------------------
-    st.subheader("📈 Insights from Dataset")
+    # ----------------------------
+    # Step 2: User Input
+    # ----------------------------
+    st.header("Step 2: Enter Your Details")
+    name = st.text_input("Name")
+    experience = st.number_input("Years of Experience", min_value=0, max_value=50, value=1)
+    
+    roles_from_csv = df['role'].unique() if 'role' in df.columns else ["Developer", "Data Scientist", "Analyst", "Manager", "Other"]
+    role = st.selectbox("Current Role", roles_from_csv)
+    
+    st.markdown(f"List your skills separated by commas (from CSV columns: {', '.join(skill_columns)})")
+    skills_input = st.text_area("Your Skills")
+    skills_list = [skill.strip().lower() for skill in skills_input.split(",")]
 
-    if desired_col:
-        st.write("**Distribution of Desired Roles**")
-        st.bar_chart(df[desired_col].value_counts())
+    # ----------------------------
+    # Step 3: Predict & Visualize
+    # ----------------------------
+    if st.button("Analyse Skill Gap"):
+        # Create user skill vector
+        user_skill_vector = [1 if skill.lower() in skills_list else 0 for skill in skill_columns]
 
-    if skills_col:
-        st.write("**Top Skills in Dataset**")
-        all_skills = []
-        for s in df[skills_col].dropna():
-            all_skills.extend([x.strip() for x in str(s).split(",")])
-        skill_series = pd.Series(all_skills)
-        st.bar_chart(skill_series.value_counts().head(15))
+        # Encode role
+        role_dict = {r: i for i, r in enumerate(roles_from_csv)}
+        role_encoded = role_dict.get(role, 0)
 
-    # ---------------------------
-    # Step 4: User Input Form
-    # ---------------------------
-    st.subheader("📝 Enter Your Details")
+        # Model input
+        X = np.array([[experience, role_encoded] + user_skill_vector])
 
-    with st.form("user_input_form"):
-        name = st.text_input("Your Name")
-        skills_input = st.text_area("Your Current Skills (comma separated)")
-        experience = st.text_input("Your Last Work Experience (e.g., Intern, Student, Project, Junior Developer)")
+        # Predict skill gap
+        gap_score = model.predict(X)[0]  # numeric prediction
+        st.success(f"Hello {name}! Your estimated skill gap score is: **{gap_score:.2f}**")
 
-        submitted = st.form_submit_button("🔮 Analyse My Skill Gap")
+        # Identify missing skills
+        missing_skills = [skill for skill, has_skill in zip(skill_columns, user_skill_vector) if not has_skill]
+        if missing_skills:
+            st.info(f"Recommended skills to improve: {', '.join(missing_skills)}")
+        else:
+            st.info("You have all key skills!")
 
-    # ---------------------------
-    # Step 5: Skill Gap Analysis
-    # ---------------------------
-    if submitted and name and skills_input:
-        user_skills = [s.strip() for s in skills_input.split(",")]
+        # ----------------------------
+        # Radar Chart Visualization
+        # ----------------------------
+        fig = go.Figure()
 
-        role_skills_map = {}
+        # User skills
+        fig.add_trace(go.Scatterpolar(
+            r=user_skill_vector,
+            theta=skill_columns,
+            fill='toself',
+            name='Your Skills'
+        ))
 
-        for _, row in df.iterrows():
-            desired_role = row[desired_col]
-            role_skills = [s.strip() for s in str(row[skills_col]).split(",")]
-            if desired_role not in role_skills_map:
-                role_skills_map[desired_role] = []
-            role_skills_map[desired_role].extend(role_skills)
+        # Recommended skills (inverse of user skills)
+        recommended_vector = [0 if val == 1 else 1 for val in user_skill_vector]
+        fig.add_trace(go.Scatterpolar(
+            r=recommended_vector,
+            theta=skill_columns,
+            fill='toself',
+            name='Recommended Skills'
+        ))
 
-        # Average required skills for each role
-        for role in role_skills_map:
-            role_skills_map[role] = list(set(role_skills_map[role]))
+        fig.update_layout(
+            polar=dict(
+                radialaxis=dict(visible=True, range=[0,1])
+            ),
+            showlegend=True,
+            title="Skill Gap Radar Chart"
+        )
 
-        # Compare user skills with each role
-        best_match = None
-        best_score = -1
-        missing_skills = []
+        st.plotly_chart(fig, use_container_width=True)
 
-        for role, req_skills in role_skills_map.items():
-            overlap = len(set(user_skills) & set(req_skills))
-            score = overlap / len(req_skills) if req_skills else 0
-            if score > best_score:
-                best_score = score
-                best_match = role
-                missing_skills = list(set(req_skills) - set(user_skills))
-
-        # ---------------------------
-        # Step 6: Show Results
-        # ---------------------------
-        st.success(f"### ✅ Skill Gap Analysis for {name}")
-        st.write(f"**Last Work Experience:** {experience}")
-        st.write(f"**Suggested Desired Role:** {best_match}")
-        st.write(f"**Your Skills:** {', '.join(user_skills)}")
-        st.write(f"**Missing Skills:** {', '.join(missing_skills) if missing_skills else 'None 🎉'}")
-        st.write(f"**Success Percentage:** {round(best_score*100, 2)} %")
+        st.header("Insights")
+        st.markdown("""
+        - Radar chart shows your current skills vs recommended skills.  
+        - Focus on missing skills to close the gap.  
+        - Update CSV and skill input over time to track progress.
+        """)
