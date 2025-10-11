@@ -1,115 +1,208 @@
-# skillgap_analyser_streamlit.py
-
+# skillgap_analyzer.py
 import streamlit as st
 import pandas as pd
 import numpy as np
-import pickle
-import plotly.graph_objects as go
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.metrics import accuracy_score, classification_report
 
-# ----------------------------
-# Load ML model
-# ----------------------------
-# Make sure your model is saved as 'skillgap_model.pkl'
-with open("skillgap_model.pkl", "rb") as f:
-    model = pickle.load(f)
+# ---------------------------------
+# 🎨 Page Configuration
+# ---------------------------------
+st.set_page_config(page_title="Skill Gap Analyzer", layout="wide")
+st.markdown("<h1 style='text-align:center; color:#00C9A7;'>💼 Skill Gap Analyzer</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center;'>Identify and bridge your missing skills for your desired career goals</p>", unsafe_allow_html=True)
+st.markdown("---")
 
-# ----------------------------
-# Streamlit UI
-# ----------------------------
-st.set_page_config(page_title="Skillgap Analyser", layout="wide")
-st.title("Skillgap Analyser 🧠")
-st.markdown("""
-Upload a CSV file with skills data and enter your details to analyze your skill gap.
-""")
+# ---------------------------------
+# 📂 Dataset Section
+# ---------------------------------
+col1, col2 = st.columns([2, 1])
 
-# ----------------------------
-# Step 1: CSV Upload
-# ----------------------------
-st.header("Step 1: Upload CSV")
-uploaded_file = st.file_uploader("Upload CSV file", type=["csv"])
+with col2:
+    st.header("📥 Data Input")
+    uploaded_file = st.file_uploader("Upload your student skill dataset", type=["csv", "xlsx"])
+    use_sample = st.checkbox("Use sample dataset (recommended for demo)", value=True)
 
-if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
-    st.success("CSV uploaded successfully!")
+def create_sample_data():
+    data = {
+        "Year_of_Study": ["2nd", "3rd", "4th", "2nd", "3rd"],
+        "Degree_Branch": ["CSE", "ECE", "AIML", "EEE", "CIVIL"],
+        "Python_Skill(1-5)": [4, 3, 5, 2, 1],
+        "Java_Skill(1-5)": [3, 4, 2, 3, 2],
+        "C_C++_Skill(1-5)": [4, 2, 5, 1, 2],
+        "SQL_Skill(1-5)": [3, 3, 4, 2, 1],
+        "WebDev_Skill(1-5)": [4, 2, 5, 3, 2],
+        "Communication_Skill(1-5)": [4, 5, 3, 4, 2],
+        "ProblemSolving_Skill(1-5)": [5, 4, 4, 3, 2],
+        "Leadership_Skill(1-5)": [3, 4, 3, 2, 1],
+        "Teamwork_Skill(1-5)": [5, 4, 3, 4, 3],
+        "Completed_Courses": [3, 5, 6, 2, 1],
+        "Career_Goal": ["Software Engineer", "Data Scientist", "AI Engineer", "Developer", "Civil Engineer"],
+        "Industry_Interest": ["IT", "AI", "AI", "Software", "Construction"],
+        "Learning_Hours_per_Week": [10, 12, 8, 5, 6],
+        "Learning_Method": ["Online", "Offline", "Online", "Hybrid", "Online"],
+        "Last_Training": ["Python", "ML", "DL", "Java", "AutoCAD"],
+        "Desired Role": ["Backend Developer", "ML Engineer", "AI Developer", "Frontend Dev", "Design Engineer"],
+        "Missing_Skills": ["Cloud", "Deep Learning", "NLP", "Frontend", "Project Management"],
+        "Confidence_Level(1-10)": [8, 7, 9, 6, 5],
+        "Challenges": ["Time management", "Lack of resources", "Practical exposure", "Motivation", "Guidance"],
+        "Need_Recommendations": ["Yes", "Yes", "No", "Yes", "Yes"]
+    }
+    return pd.DataFrame(data)
+
+# Load dataset
+try:
+    if uploaded_file is not None:
+        if uploaded_file.name.endswith(".csv"):
+            df = pd.read_csv(uploaded_file)
+        else:
+            df = pd.read_excel(uploaded_file)
+    elif use_sample:
+        df = create_sample_data()
+    else:
+        st.warning("⚠️ Please upload a dataset or enable 'Use sample dataset'.")
+        st.stop()
+except Exception as e:
+    st.error(f"Error loading dataset: {e}")
+    st.stop()
+
+# Drop Name column if it exists
+if "Name" in df.columns:
+    df = df.drop(columns=["Name"])
+
+with col1:
+    st.header("📊 Dataset Preview")
     st.dataframe(df.head())
 
-    # Automatically detect skill columns (excluding name, experience, role)
-    skill_columns = [col for col in df.columns if col.lower() not in ["name", "experience", "role"]]
+st.markdown("---")
 
-    # ----------------------------
-    # Step 2: User Input
-    # ----------------------------
-    st.header("Step 2: Enter Your Details")
-    name = st.text_input("Name")
-    experience = st.number_input("Years of Experience", min_value=0, max_value=50, value=1)
-    
-    roles_from_csv = df['role'].unique() if 'role' in df.columns else ["Developer", "Data Scientist", "Analyst", "Manager", "Other"]
-    role = st.selectbox("Current Role", roles_from_csv)
-    
-    st.markdown(f"List your skills separated by commas (from CSV columns: {', '.join(skill_columns)})")
-    skills_input = st.text_area("Your Skills")
-    skills_list = [skill.strip().lower() for skill in skills_input.split(",")]
+# ---------------------------------
+# 🧠 Model Training Section
+# ---------------------------------
+st.header("🧩 Model Training and Evaluation")
 
-    # ----------------------------
-    # Step 3: Predict & Visualize
-    # ----------------------------
-    if st.button("Analyse Skill Gap"):
-        # Create user skill vector
-        user_skill_vector = [1 if skill.lower() in skills_list else 0 for skill in skill_columns]
+# Define target and features
+target_col = "Missing_Skills"
+feature_cols = [col for col in df.columns if col != target_col]
 
-        # Encode role
-        role_dict = {r: i for i, r in enumerate(roles_from_csv)}
-        role_encoded = role_dict.get(role, 0)
+X = df[feature_cols]
+y = df[target_col]
 
-        # Model input
-        X = np.array([[experience, role_encoded] + user_skill_vector])
+# Encode target
+le = LabelEncoder()
+y_encoded = le.fit_transform(y)
 
-        # Predict skill gap
-        gap_score = model.predict(X)[0]  # numeric prediction
-        st.success(f"Hello {name}! Your estimated skill gap score is: **{gap_score:.2f}**")
+# Identify numeric and categorical features
+numeric_features = X.select_dtypes(include=[np.number]).columns.tolist()
+categorical_features = X.select_dtypes(include=['object']).columns.tolist()
 
-        # Identify missing skills
-        missing_skills = [skill for skill, has_skill in zip(skill_columns, user_skill_vector) if not has_skill]
-        if missing_skills:
-            st.info(f"Recommended skills to improve: {', '.join(missing_skills)}")
-        else:
-            st.info("You have all key skills!")
+# Preprocessor
+preprocessor = ColumnTransformer([
+    ("num", StandardScaler(), numeric_features),
+    ("cat", OneHotEncoder(handle_unknown="ignore"), categorical_features)
+])
 
-        # ----------------------------
-        # Radar Chart Visualization
-        # ----------------------------
-        fig = go.Figure()
+# Model
+model = RandomForestClassifier(n_estimators=200, random_state=42)
 
-        # User skills
-        fig.add_trace(go.Scatterpolar(
-            r=user_skill_vector,
-            theta=skill_columns,
-            fill='toself',
-            name='Your Skills'
-        ))
+# Pipeline
+pipeline = Pipeline([
+    ("preprocessor", preprocessor),
+    ("model", model)
+])
 
-        # Recommended skills (inverse of user skills)
-        recommended_vector = [0 if val == 1 else 1 for val in user_skill_vector]
-        fig.add_trace(go.Scatterpolar(
-            r=recommended_vector,
-            theta=skill_columns,
-            fill='toself',
-            name='Recommended Skills'
-        ))
+# Train/test split
+X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.25, random_state=42)
 
-        fig.update_layout(
-            polar=dict(
-                radialaxis=dict(visible=True, range=[0,1])
-            ),
-            showlegend=True,
-            title="Skill Gap Radar Chart"
-        )
+# Train model
+pipeline.fit(X_train, y_train)
+y_pred = pipeline.predict(X_test)
 
-        st.plotly_chart(fig, use_container_width=True)
+# Evaluation
+col3, col4 = st.columns(2)
+with col3:
+    st.subheader("📈 Model Accuracy")
+    st.metric("Accuracy", f"{accuracy_score(y_test, y_pred)*100:.2f}%")
+with col4:
+    st.subheader("📋 Classification Report")
+    st.text(classification_report(y_test, y_pred, target_names=le.classes_, zero_division=0))
 
-        st.header("Insights")
-        st.markdown("""
-        - Radar chart shows your current skills vs recommended skills.  
-        - Focus on missing skills to close the gap.  
-        - Update CSV and skill input over time to track progress.
-        """)
+st.markdown("---")
+
+# ---------------------------------
+# 🔮 Skill Gap Prediction
+# ---------------------------------
+st.header("🔮 Skill Gap Prediction")
+
+col5, col6 = st.columns(2)
+with col5:
+    year = st.selectbox("Year of Study", sorted(df["Year_of_Study"].unique()))
+    branch = st.selectbox("Degree Branch", sorted(df["Degree_Branch"].unique()))
+    goal = st.selectbox("Career Goal", sorted(df["Career_Goal"].unique()))
+    interest = st.selectbox("Industry Interest", sorted(df["Industry_Interest"].unique()))
+    method = st.selectbox("Learning Method", sorted(df["Learning_Method"].unique()))
+    training = st.selectbox("Last Training", sorted(df["Last_Training"].unique()))
+    desired_role = st.selectbox("Desired Role", sorted(df["Desired Role"].unique()))
+
+with col6:
+    py = st.slider("Python Skill (1-5)", 1, 5, 3)
+    java = st.slider("Java Skill (1-5)", 1, 5, 3)
+    cpp = st.slider("C/C++ Skill (1-5)", 1, 5, 3)
+    sql = st.slider("SQL Skill (1-5)", 1, 5, 3)
+    web = st.slider("WebDev Skill (1-5)", 1, 5, 3)
+    comm = st.slider("Communication Skill (1-5)", 1, 5, 3)
+    prob = st.slider("Problem Solving Skill (1-5)", 1, 5, 3)
+    lead = st.slider("Leadership Skill (1-5)", 1, 5, 3)
+    team = st.slider("Teamwork Skill (1-5)", 1, 5, 3)
+    confidence = st.slider("Confidence Level (1-10)", 1, 10, 7)
+    completed_courses = st.number_input("Completed Courses", min_value=0, max_value=20, value=3)
+    learning_hours = st.number_input("Learning Hours per Week", min_value=0, max_value=50, value=8)
+    challenges = st.text_input("Challenges", "Time management")
+    need_reco = st.selectbox("Need Recommendations?", ["Yes", "No"])
+
+# Build prediction DataFrame
+input_data = pd.DataFrame([{
+    "Year_of_Study": year,
+    "Degree_Branch": branch,
+    "Python_Skill(1-5)": py,
+    "Java_Skill(1-5)": java,
+    "C_C++_Skill(1-5)": cpp,
+    "SQL_Skill(1-5)": sql,
+    "WebDev_Skill(1-5)": web,
+    "Communication_Skill(1-5)": comm,
+    "ProblemSolving_Skill(1-5)": prob,
+    "Leadership_Skill(1-5)": lead,
+    "Teamwork_Skill(1-5)": team,
+    "Completed_Courses": completed_courses,
+    "Career_Goal": goal,
+    "Industry_Interest": interest,
+    "Learning_Hours_per_Week": learning_hours,
+    "Learning_Method": method,
+    "Last_Training": training,
+    "Desired Role": desired_role,
+    "Confidence_Level(1-10)": confidence,
+    "Challenges": challenges,
+    "Need_Recommendations": need_reco
+}])
+
+if st.button("🔍 Analyze Skill Gap"):
+    try:
+        # Ensure input columns match
+        for col in numeric_features:
+            input_data[col] = pd.to_numeric(input_data[col], errors='coerce').fillna(0)
+        for col in categorical_features:
+            input_data[col] = input_data[col].astype(str).fillna("Unknown")
+
+        input_data = input_data[X.columns]
+
+        pred = pipeline.predict(input_data)
+        predicted_skill = le.inverse_transform(pred)[0]
+        st.success(f"🎯 Predicted Missing Skill: **{predicted_skill}**")
+        st.info(f"💡 Suggestion: Focus on improving your *{predicted_skill}* through courses, workshops, or projects.")
+        st.balloons()
+    except Exception as e:
+        st.error(f"⚠️ Prediction failed: {e}")
