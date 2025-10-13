@@ -247,17 +247,3 @@ if st.session_state["progress"]:
     st.download_button("Download Progress CSV", data=csv, file_name="skillgap_progress.csv", mime="text/csv")
 else:
     st.info("No progress yet.")
-
-st.markdown("---")
-st.header("5) Professional Upgrade Suggestions")
-st.markdown("""
-- Collect 1000+ real student records
-- Add GPA, project count, internships
-- Try XGBoost / LightGBM
-- Add SHAP explainability
-- Rank free courses by engagement
-- Store data in SQLite / Airtable
-- Resume parser for auto skill extraction
-- CI/CD with GitHub Actions
-""")
-st.markdown("<div style='text-align:center; color:#9fb3c8'>Skill Gap Analyzer — PRO • Free Courses • Professional UI</div>", unsafe_allow_html=True)
