@@ -10,36 +10,23 @@ from sklearn.metrics import accuracy_score
 import plotly.express as px
 import requests
 
-st.set_page_config(page_title="Skill Gap Analyzer — PRO", layout="wide", page_icon="💼")
+st.set_page_config(page_title="Skill Gap Analyzer", layout="wide", page_icon="💼")
 
-# CSS Styling for dark theme and white/light font
+# CSS for dark theme with variety of light colors
 st.markdown("""
 <style>
 [data-testid="stAppViewContainer"] {
     background: linear-gradient(135deg,#0f172a,#1e293b);
     color: #FFFFFF !important;
 }
-.main-title { 
-    text-align:center; 
-    font-size:2.4rem; 
-    color:#00F5A0 !important; 
-    font-weight:700; 
-}
-h3, h4, h5, h6, p, label, span, div {
-    color: #FFFFFF !important;
-}
-a { 
-    color:#ADFF2F !important; 
-    text-decoration:none; 
-}
-.stSlider > div > div[data-baseweb="slider"] > div { 
-    background: #1e293b !important; 
-}
-.stButton > button {
-    background: linear-gradient(90deg, #00DBDE, #FC00FF) !important;
-    color: #FFFFFF !important;
-    border-radius: 8px;
-}
+.main-title { text-align:center; font-size:2.4rem; font-weight:700; background: -webkit-linear-gradient(#00F5A0,#ADFF2F,#00FFFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
+h3 { color:#FFD700 !important; }
+h4 { color:#ADFF2F !important; }
+h5 { color:#00FFFF !important; }
+p, label, span, div { color: #FFFFFF !important; }
+a { color:#FF69B4 !important; text-decoration:none; }
+.stSlider > div > div[data-baseweb="slider"] > div { background: #1e293b !important; }
+.stButton > button { background: linear-gradient(90deg, #00DBDE, #FC00FF) !important; color: #FFFFFF !important; border-radius: 8px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -108,7 +95,7 @@ def generate_synthetic_data(n=500, random_state=42):
     return pd.DataFrame(rows)
 
 # Title
-st.markdown("<h1 class='main-title'>💼 Skill Gap Analyzer — PRO</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-title'>💼 Skill Gap Analyzer</h1>", unsafe_allow_html=True)
 st.markdown("<hr style='border:1px solid #00F5A0'>", unsafe_allow_html=True)
 
 # Dataset Section
@@ -182,7 +169,7 @@ with st.form("skill_form"):
         skills_to_show = career_skills.get(goal, ["Python","Java","SQL","WebDev","Communication","ProblemSolving"])
         skill_inputs = {}
         for skill in skills_to_show:
-            skill_inputs[skill] = st.slider(skill, 1, 5, 3)
+            skill_inputs[skill] = st.select_slider(skill, options=[1,2,3,4,5], value=3)
     submitted = st.form_submit_button("Analyze My Skill Gap")
 
 if submitted:
@@ -201,7 +188,7 @@ if submitted:
     }])
     pred_skill = pipeline.predict(input_data)[0]
     st_lottie_safe(LOTTIE_SUCCESS, height=200)
-    st.success(f"Predicted Missing Skill: {pred_skill}")
+    st.success(f"Predicted Missing Skill: {pred_skill}", icon="🎯")
 
     # Radar chart
     skill_df = pd.DataFrame({"Skill": list(skill_inputs.keys()), "Score": list(skill_inputs.values())})
