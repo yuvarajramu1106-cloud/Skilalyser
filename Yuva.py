@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
+import requests
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
@@ -8,29 +9,18 @@ from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import plotly.express as px
-import requests
 
-st.set_page_config(page_title="Skill Gap Analyzer", layout="wide", page_icon="💼")
-
-# CSS for dark theme with variety of light colors
+st.set_page_config(page_title="Skill Gap Analyzer — PRO", layout="wide", page_icon="💼")
 st.markdown("""
 <style>
-[data-testid="stAppViewContainer"] {
-    background: linear-gradient(135deg,#0f172a,#1e293b);
-    color: #FFFFFF !important;
-}
-.main-title { text-align:center; font-size:2.4rem; font-weight:700; background: -webkit-linear-gradient(#00F5A0,#ADFF2F,#00FFFF); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-h3 { color:#FFD700 !important; }
-h4 { color:#ADFF2F !important; }
-h5 { color:#00FFFF !important; }
-p, label, span, div { color: #FFFFFF !important; }
-a { color:#FF69B4 !important; text-decoration:none; }
-.stSlider > div > div[data-baseweb="slider"] > div { background: #1e293b !important; }
-.stButton > button { background: linear-gradient(90deg, #00DBDE, #FC00FF) !important; color: #FFFFFF !important; border-radius: 8px; }
+[data-testid="stAppViewContainer"] { background: linear-gradient(135deg,#0f172a,#1e293b); color: #e6eef6;}
+.main-title { text-align:center; font-size:2.4rem; color:#7cfff0; font-weight:700; }
+.card { background: rgba(255,255,255,0.04); padding:16px; border-radius:12px; box-shadow: 0 6px 18px rgba(2,6,23,0.6); }
+.small { font-size:0.9rem; color:#cfe9f5 }
+h3 { color: #00F5A0; font-weight:600; }
 </style>
 """, unsafe_allow_html=True)
 
-# Lottie Animation Loader
 def load_lottie_url(url):
     try:
         r = requests.get(url, timeout=6)
@@ -47,105 +37,116 @@ def st_lottie_safe(lottie_json, height=150):
     except:
         pass
 
-LOTTIE_SUCCESS = load_lottie_url("https://assets7.lottiefiles.com/packages/lf20_sSF6EG.json")
+LOTTIE_SUCCESS = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_jbrw3hcz.json")
 
-# Synthetic Data Generator
 @st.cache_data
 def generate_synthetic_data(n=500, random_state=42):
     np.random.seed(random_state)
     years = ["1st","2nd","3rd","4th"]
     branches = ["CSE","ECE","AIML","IT","EEE","MECH","CIVIL"]
-    goals_pool = ["Software Engineer","Data Scientist","AI Engineer","Frontend Developer",
-                  "DevOps Engineer","Product Manager","Data Analyst","Embedded Engineer"]
-    missing_skills_pool = ["Cloud Computing","Deep Learning","NLP","Frontend Frameworks",
-                           "DevOps","Project Management","Databases","Computer Vision","Model Deployment"]
+    goals_pool = ["Software Engineer","Data Scientist","AI Engineer","Frontend Developer","DevOps Engineer","Product Manager","Data Analyst","Embedded Engineer"]
+    missing_skills_pool = ["Cloud Computing","Deep Learning","NLP","Frontend Frameworks","DevOps","Project Management","Databases","Computer Vision","Model Deployment"]
     rows = []
     for _ in range(n):
-        year = np.random.choice(years)
+        year = np.random.choice(years, p=[0.15,0.35,0.3,0.2])
         branch = np.random.choice(branches)
         goal = np.random.choice(goals_pool)
-        skills = {
-            "Python": np.random.randint(1,6),
-            "Java": np.random.randint(1,6),
-            "SQL": np.random.randint(1,6),
-            "WebDev": np.random.randint(1,6),
-            "Communication": np.random.randint(1,6),
-            "ProblemSolving": np.random.randint(1,6)
+        base = {
+            "Python": int(np.clip(np.round(np.random.normal(3, 1)),1,5)),
+            "Java": int(np.clip(np.round(np.random.normal(3, 1)),1,5)),
+            "SQL": int(np.clip(np.round(np.random.normal(3, 1)),1,5)),
+            "WebDev": int(np.clip(np.round(np.random.normal(3, 1)),1,5)),
+            "Communication": int(np.clip(np.round(np.random.normal(3, 1)),1,5)),
+            "ProblemSolving": int(np.clip(np.round(np.random.normal(3, 1)),1,5))
         }
+        completed_courses = int(np.clip(np.random.poisson(3), 0, 20))
+        learn_hours = int(np.clip(np.round(np.random.normal(6,2)), 1, 40))
         low_skills = []
-        if skills["WebDev"] <= 2: low_skills.append("Frontend Frameworks")
-        if skills["Python"] <= 2 and skills["ProblemSolving"] <= 2: low_skills.append("Deep Learning")
-        if skills["SQL"] <= 2: low_skills.append("Databases")
+        if base["WebDev"] <= 2: low_skills.append("Frontend Frameworks")
+        if base["Python"] <= 2 and base["ProblemSolving"] <= 2: low_skills.append("Deep Learning")
+        if base["SQL"] <= 2: low_skills.append("Databases")
         if not low_skills: low_skills = [np.random.choice(missing_skills_pool)]
         missing_skill = np.random.choice(low_skills)
         rows.append({
             "Year_of_Study": year,
             "Degree_Branch": branch,
             "Career_Goal": goal,
-            "Python_Skill": skills["Python"],
-            "Java_Skill": skills["Java"],
-            "SQL_Skill": skills["SQL"],
-            "WebDev_Skill": skills["WebDev"],
-            "Communication_Skill": skills["Communication"],
-            "ProblemSolving_Skill": skills["ProblemSolving"],
-            "Completed_Courses": np.random.randint(0,10),
-            "Learning_Hours_per_Week": np.random.randint(1,20),
+            "Python_Skill": base["Python"],
+            "Java_Skill": base["Java"],
+            "SQL_Skill": base["SQL"],
+            "WebDev_Skill": base["WebDev"],
+            "Communication_Skill": base["Communication"],
+            "ProblemSolving_Skill": base["ProblemSolving"],
+            "Completed_Courses": completed_courses,
+            "Learning_Hours_per_Week": learn_hours,
             "Missing_Skill": missing_skill
         })
     return pd.DataFrame(rows)
 
-# Title
-st.markdown("<h1 class='main-title'>💼 Skill Gap Analyzer</h1>", unsafe_allow_html=True)
-st.markdown("<hr style='border:1px solid #00F5A0'>", unsafe_allow_html=True)
-
-# Dataset Section
+st.markdown("<div class='card'><h1 class='main-title'>Skill Gap Analyzer — PRO</h1></div>", unsafe_allow_html=True)
+st.markdown("---")
 st.header("1) Dataset — Generate or Upload")
-col1, col2 = st.columns([2,1])
-with col1:
+
+col_a, col_b = st.columns([2,1])
+with col_a:
     synth_size = st.slider("Synthetic dataset size", 200, 2000, 500, step=100)
     if st.button("Generate Synthetic Dataset"):
         df_generated = generate_synthetic_data(n=synth_size)
+        st.success(f"Synthetic dataset created: {len(df_generated)} records")
+        st.dataframe(df_generated.head(10))
         st.session_state["df"] = df_generated
-        st.dataframe(df_generated.head(10).style.set_properties(**{'color': '#FFFFFF', 'background-color': '#1e293b'}))
-with col2:
+with col_b:
     uploaded = st.file_uploader("Upload CSV/XLSX", type=["csv","xlsx"])
     if uploaded:
-        if uploaded.name.endswith(".csv"):
-            df_up = pd.read_csv(uploaded)
-        else:
-            df_up = pd.read_excel(uploaded)
-        st.session_state["df"] = df_up
-        st.dataframe(df_up.head(10).style.set_properties(**{'color': '#FFFFFF', 'background-color': '#1e293b'}))
+        try:
+            if uploaded.name.endswith(".csv"):
+                df_up = pd.read_csv(uploaded)
+            else:
+                df_up = pd.read_excel(uploaded)
+            if "Missing_Skill" not in df_up.columns:
+                st.warning("Missing 'Missing_Skill' column.")
+            else:
+                st.session_state["df"] = df_up.copy()
+                st.success("Dataset loaded.")
+                st.dataframe(df_up.head())
+        except Exception as e:
+            st.error(f"Load error: {e}")
 
-# Load dataset
 if "df" in st.session_state:
     df = st.session_state["df"]
 else:
     df = generate_synthetic_data(n=500)
     st.session_state["df"] = df
 
-# Model Accuracy Section
 st.markdown("---")
 st.header("2) Model Accuracy")
-X = df.drop(columns=["Missing_Skill"])
-y = df["Missing_Skill"]
-num_cols = X.select_dtypes(include=np.number).columns.tolist()
-cat_cols = X.select_dtypes(include=['object']).columns.tolist()
-transformers = []
-if num_cols: transformers.append(('num', StandardScaler(), num_cols))
-if cat_cols: transformers.append(('cat', OneHotEncoder(handle_unknown='ignore', sparse_output=False), cat_cols))
-preprocessor = ColumnTransformer(transformers)
-rf_model = RandomForestClassifier(random_state=42)
-pipeline = Pipeline([("preprocessor", preprocessor), ("classifier", rf_model)])
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-pipeline.fit(X_train, y_train)
-y_pred = pipeline.predict(X_test)
-acc = accuracy_score(y_test, y_pred)
-st.success(f"Model Accuracy: {acc*100:.2f}%")
 
-# Skill Prediction Section
+if "df" in st.session_state:
+    target = "Missing_Skill"
+    X = df.drop(columns=[target])
+    y = df[target].astype(str)
+    numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
+    cat_cols = X.select_dtypes(include=['object']).columns.tolist()
+
+    transformers = []
+    if numeric_cols: transformers.append(("num", StandardScaler(), numeric_cols))
+    if cat_cols: transformers.append(("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_cols))
+    preprocessor = ColumnTransformer(transformers)
+
+    rf = RandomForestClassifier(random_state=42)
+    pipeline = Pipeline([("pre", preprocessor), ("clf", rf)])
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    pipeline.fit(X_train, y_train)
+    y_pred = pipeline.predict(X_test)
+    test_acc = accuracy_score(y_test, y_pred) * 100
+
+    st.markdown(f"<h3>Model Test Accuracy: {test_acc:.2f}%</h3>", unsafe_allow_html=True)
+else:
+    st.info("Model not trained yet or dataset missing.")
+
 st.markdown("---")
-st.header("3) Predict Your Skill Gap")
+st.header("3) Predict Missing Skill Dynamically")
 
 career_skills = {
     "Software Engineer":["Python","Java","SQL","ProblemSolving"],
@@ -158,54 +159,55 @@ career_skills = {
     "Embedded Engineer":["C/C++","ProblemSolving","Communication"]
 }
 
-with st.form("skill_form"):
+with st.form("predict_form"):
     col1, col2 = st.columns(2)
     with col1:
         branch = st.selectbox("Degree Branch", sorted(df["Degree_Branch"].unique()))
         year = st.selectbox("Year of Study", sorted(df["Year_of_Study"].unique()))
         goal = st.selectbox("Career Goal", sorted(df["Career_Goal"].unique()))
     with col2:
-        st.markdown("### Rate Your Skills (1-5)")
+        st.markdown("### Relevant Skills")
         skills_to_show = career_skills.get(goal, ["Python","Java","SQL","WebDev","Communication","ProblemSolving"])
         skill_inputs = {}
         for skill in skills_to_show:
-            skill_inputs[skill] = st.select_slider(skill, options=[1,2,3,4,5], value=3)
+            skill_inputs[skill] = st.slider(f"{skill} Skill (1-5)", 1, 5, 3)
+
     submitted = st.form_submit_button("Analyze My Skill Gap")
+    if submitted:
+        input_df = pd.DataFrame([{
+            "Year_of_Study": year,
+            "Degree_Branch": branch,
+            "Career_Goal": goal,
+            "Python_Skill": skill_inputs.get("Python",3),
+            "Java_Skill": skill_inputs.get("Java",3),
+            "SQL_Skill": skill_inputs.get("SQL",3),
+            "WebDev_Skill": skill_inputs.get("WebDev",3),
+            "Communication_Skill": skill_inputs.get("Communication",3),
+            "ProblemSolving_Skill": skill_inputs.get("ProblemSolving",3),
+            "Completed_Courses": 0,
+            "Learning_Hours_per_Week": 0
+        }])
+        pipeline.fit(X, y)
+        pred = pipeline.predict(input_df)[0]
+        st_lottie_safe(LOTTIE_SUCCESS, height=160)
+        st.success(f"Predicted Missing Skill: {pred}")
 
-if submitted:
-    input_data = pd.DataFrame([{
-        "Year_of_Study": year,
-        "Degree_Branch": branch,
-        "Career_Goal": goal,
-        "Python_Skill": skill_inputs.get("Python",3),
-        "Java_Skill": skill_inputs.get("Java",3),
-        "SQL_Skill": skill_inputs.get("SQL",3),
-        "WebDev_Skill": skill_inputs.get("WebDev",3),
-        "Communication_Skill": skill_inputs.get("Communication",3),
-        "ProblemSolving_Skill": skill_inputs.get("ProblemSolving",3),
-        "Completed_Courses": 0,
-        "Learning_Hours_per_Week": 0
-    }])
-    pred_skill = pipeline.predict(input_data)[0]
-    st_lottie_safe(LOTTIE_SUCCESS, height=200)
-    st.success(f"Predicted Missing Skill: {pred_skill}", icon="🎯")
-
-    # Radar chart
-    skill_df = pd.DataFrame({"Skill": list(skill_inputs.keys()), "Score": list(skill_inputs.values())})
-    fig = px.line_polar(skill_df, r="Score", theta="Skill", line_close=True, range_r=[0,5], 
-                        title="Your Skill Profile", template="plotly_dark")
-    st.plotly_chart(fig, use_container_width=True)
-
-    # Free course recommendations
-    course_links = {
-        "Cloud Computing": ["https://www.coursera.org/learn/gcp-fundamentals", "https://www.aws.training/Details/Curriculum?id=20685"],
-        "Deep Learning": ["https://www.coursera.org/specializations/deep-learning", "https://www.freecodecamp.org/news/tag/deep-learning/"],
-        "Frontend Frameworks": ["https://www.freecodecamp.org/learn/front-end-development-libraries/"],
-        "DevOps": ["https://cloud.google.com/training", "https://learn.microsoft.com/en-us/training/browse/?terms=devops"],
-        "Project Management": ["https://www.coursera.org/professional-certificates/google-project-management"],
-        "Databases": ["https://www.kaggle.com/learn/SQL"]
-    }
-    recs = course_links.get(pred_skill, ["https://www.freecodecamp.org/news"])
-    st.markdown("### Recommended Free Courses")
-    for link in recs:
-        st.markdown(f"[{link}]({link})")
+        curated = {
+            "Cloud Computing": [("Google Cloud Fundamentals","https://www.coursera.org/learn/gcp-fundamentals"),
+                                ("AWS Cloud Practitioner Essentials","https://www.aws.training/Details/Curriculum?id=20685"),
+                                ("Azure Fundamentals","https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/")],
+            "Deep Learning": [("Deep Learning Specialization","https://www.coursera.org/specializations/deep-learning"),
+                              ("FreeCodeCamp Tutorials","https://www.freecodecamp.org/news/tag/deep-learning/"),
+                              ("YouTube Crash Course","https://www.youtube.com/results?search_query=deep+learning+course")],
+            "NLP": [("Coursera NLP","https://www.coursera.org/search?query=natural%20language%20processing&price=Free"),
+                    ("FreeCodeCamp NLP","https://www.freecodecamp.org/news/tag/nlp/"),
+                    ("YouTube NLP","https://www.youtube.com/results?search_query=nlp+tutorial")],
+            "Frontend Frameworks": [("freeCodeCamp Front End","https://www.freecodecamp.org/learn/front-end-development-libraries/"),
+                                    ("React Full Course","https://www.youtube.com/results?search_query=react+full+course+free"),
+                                    ("Coursera Frontend","https://www.coursera.org/search?query=frontend&price=Free")],
+            "DevOps": [("Google Cloud Training","https://cloud.google.com/training"),
+                       ("Microsoft Learn DevOps","https://learn.microsoft.com/en-us/training/browse/?terms=devops"),
+                       ("YouTube DevOps","https://www.youtube.com/results?search_query=devops+full+course+free")],
+            "Project Management": [("Google Project Management","https://www.coursera.org/professional-certificates/google-project-management"),
+                                   ("edX PM","https://www.edx.org/learn/project-management"),
+                                   ("YouTube PM
