@@ -234,7 +234,7 @@ if st.button("✨ Analyze My Skill Gap"):
     except Exception as e:
         st.error(f"⚠ Prediction failed: {e}")
 
-st.markdown("</div>", unsafe_allow_html=True)    ("model", model)
+st.markdown(("</div>", unsafe_allow_html=True)    ("model", model)
 )
 
 # Train/test split
