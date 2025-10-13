@@ -2,12 +2,12 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import requests
-from sklearn.model_selection import train_test_split, GridSearchCV
+from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.metrics import accuracy_score
 import plotly.express as px
 
 st.set_page_config(page_title="Skill Gap Analyzer — PRO", layout="wide", page_icon="💼")
@@ -17,6 +17,7 @@ st.markdown("""
 .main-title { text-align:center; font-size:2.4rem; color:#7cfff0; font-weight:700; }
 .card { background: rgba(255,255,255,0.04); padding:16px; border-radius:12px; box-shadow: 0 6px 18px rgba(2,6,23,0.6); }
 .small { font-size:0.9rem; color:#cfe9f5 }
+h3 { color: #00F5A0; font-weight:600; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -118,122 +119,122 @@ else:
     st.session_state["df"] = df
 
 st.markdown("---")
-st.header("2) Model Training & Evaluation")
+st.header("2) Model Accuracy")
 
-target = "Missing_Skill"
-X = df.drop(columns=[target])
-y = df[target].astype(str)
-numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
-cat_cols = X.select_dtypes(include=['object']).columns.tolist()
+if "df" in st.session_state:
+    target = "Missing_Skill"
+    X = df.drop(columns=[target])
+    y = df[target].astype(str)
+    numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
+    cat_cols = X.select_dtypes(include=['object']).columns.tolist()
 
-transformers = []
-if numeric_cols: transformers.append(("num", StandardScaler(), numeric_cols))
-if cat_cols: transformers.append(("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_cols))
-preprocessor = ColumnTransformer(transformers)
+    transformers = []
+    if numeric_cols: transformers.append(("num", StandardScaler(), numeric_cols))
+    if cat_cols: transformers.append(("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_cols))
+    preprocessor = ColumnTransformer(transformers)
 
-rf = RandomForestClassifier(random_state=42)
-pipeline = Pipeline([("pre", preprocessor), ("clf", rf)])
-param_grid = {"clf__n_estimators": [150, 250], "clf__max_depth": [None, 12], "clf__min_samples_split": [2, 5]}
+    rf = RandomForestClassifier(random_state=42)
+    pipeline = Pipeline([("pre", preprocessor), ("clf", rf)])
 
-st.info("Training model with GridSearchCV (3-fold)")
-with st.spinner("Training..."):
-    grid = GridSearchCV(pipeline, param_grid, cv=3, n_jobs=-1, scoring="accuracy", verbose=0)
-    grid.fit(X, y)
-    best_model = grid.best_estimator_
-    cv_score = grid.best_score_ * 100
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42, stratify=y)
-    y_pred = best_model.predict(X_test)
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+    pipeline.fit(X_train, y_train)
+    y_pred = pipeline.predict(X_test)
     test_acc = accuracy_score(y_test, y_pred) * 100
-    class_report = classification_report(y_test, y_pred, zero_division=0, output_dict=True)
 
-st.success(f"Training completed — CV accuracy: {cv_score:.2f}%  •  Test accuracy: {test_acc:.2f}%")
-st.write("Best parameters:", grid.best_params_)
-st.dataframe(pd.DataFrame(class_report).transpose().round(3))
-st.session_state["model"] = best_model
-st.session_state["features"] = {"numeric": numeric_cols, "categorical": cat_cols}
+    st.markdown(f"<h3>Model Test Accuracy: {test_acc:.2f}%</h3>", unsafe_allow_html=True)
+else:
+    st.info("Model not trained yet or dataset missing.")
 
 st.markdown("---")
-st.header("3) Predict Missing Skill")
+st.header("3) Predict Missing Skill Dynamically")
+
+career_skills = {
+    "Software Engineer":["Python","Java","SQL","ProblemSolving"],
+    "Data Scientist":["Python","SQL","ProblemSolving","Communication"],
+    "AI Engineer":["Python","Deep Learning","ProblemSolving","SQL"],
+    "Frontend Developer":["JavaScript","WebDev","Communication","ProblemSolving"],
+    "DevOps Engineer":["Python","DevOps","Communication"],
+    "Product Manager":["Communication","ProblemSolving","Project Management"],
+    "Data Analyst":["Python","SQL","Communication"],
+    "Embedded Engineer":["C/C++","ProblemSolving","Communication"]
+}
 
 with st.form("predict_form"):
-    col1, col2, col3 = st.columns(3)
+    col1, col2 = st.columns(2)
     with col1:
         branch = st.selectbox("Degree Branch", sorted(df["Degree_Branch"].unique()))
         year = st.selectbox("Year of Study", sorted(df["Year_of_Study"].unique()))
         goal = st.selectbox("Career Goal", sorted(df["Career_Goal"].unique()))
     with col2:
-        py = st.slider("Python Skill (1-5)", 1, 5, 3)
-        java = st.slider("Java Skill (1-5)", 1, 5, 3)
-        sql = st.slider("SQL Skill (1-5)", 1, 5, 3)
-    with col3:
-        web = st.slider("WebDev Skill (1-5)", 1, 5, 3)
-        comm = st.slider("Communication (1-5)", 1, 5, 3)
-        prob = st.slider("Problem Solving (1-5)", 1, 5, 3)
+        st.markdown("### Relevant Skills")
+        skills_to_show = career_skills.get(goal, ["Python","Java","SQL","WebDev","Communication","ProblemSolving"])
+        skill_inputs = {}
+        for skill in skills_to_show:
+            skill_inputs[skill] = st.slider(f"{skill} Skill (1-5)", 1, 5, 3)
 
     submitted = st.form_submit_button("Analyze My Skill Gap")
     if submitted:
-        if "model" not in st.session_state:
-            st.error("Train model first.")
-        else:
-            input_df = pd.DataFrame([{
-                "Year_of_Study": year,
-                "Degree_Branch": branch,
-                "Career_Goal": goal,
-                "Python_Skill": py,
-                "Java_Skill": java,
-                "SQL_Skill": sql,
-                "WebDev_Skill": web,
-                "Communication_Skill": comm,
-                "ProblemSolving_Skill": prob,
-                "Completed_Courses": 0,
-                "Learning_Hours_per_Week": 0
-            }])
-            pred = st.session_state["model"].predict(input_df)[0]
-            st_lottie_safe(LOTTIE_SUCCESS, height=160)
-            st.success(f"Predicted Missing Skill: {pred}")
-            
-            curated = {
-                "Cloud Computing": [("Google Cloud Fundamentals","https://www.coursera.org/learn/gcp-fundamentals"),
-                                    ("AWS Cloud Practitioner Essentials","https://www.aws.training/Details/Curriculum?id=20685"),
-                                    ("Azure Fundamentals","https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/")],
-                "Deep Learning": [("Deep Learning Specialization","https://www.coursera.org/specializations/deep-learning"),
-                                  ("FreeCodeCamp Tutorials","https://www.freecodecamp.org/news/tag/deep-learning/"),
-                                  ("YouTube Crash Course","https://www.youtube.com/results?search_query=deep+learning+course")],
-                "NLP": [("Coursera NLP","https://www.coursera.org/search?query=natural%20language%20processing&price=Free"),
-                        ("FreeCodeCamp NLP","https://www.freecodecamp.org/news/tag/nlp/"),
-                        ("YouTube NLP","https://www.youtube.com/results?search_query=nlp+tutorial")],
-                "Frontend Frameworks": [("freeCodeCamp Front End","https://www.freecodecamp.org/learn/front-end-development-libraries/"),
-                                        ("React Full Course","https://www.youtube.com/results?search_query=react+full+course+free"),
-                                        ("Coursera Frontend","https://www.coursera.org/search?query=frontend&price=Free")],
-                "DevOps": [("Google Cloud Training","https://cloud.google.com/training"),
-                           ("Microsoft Learn DevOps","https://learn.microsoft.com/en-us/training/browse/?terms=devops"),
-                           ("YouTube DevOps","https://www.youtube.com/results?search_query=devops+full+course+free")],
-                "Project Management": [("Google Project Management","https://www.coursera.org/professional-certificates/google-project-management"),
-                                       ("edX PM","https://www.edx.org/learn/project-management"),
-                                       ("YouTube PM","https://www.youtube.com/results?search_query=project+management+course+free")],
-                "Databases": [("Kaggle SQL","https://www.kaggle.com/learn/SQL"),
-                              ("Mode SQL Tutorial","https://mode.com/sql-tutorial/"),
-                              ("FreeCodeCamp SQL","https://www.freecodecamp.org/news/tag/sql/")],
-                "Computer Vision": [("Coursera CV","https://www.coursera.org/search?query=computer%20vision&price=Free"),
-                                    ("FreeCodeCamp CV","https://www.freecodecamp.org/news/tag/computer-vision/"),
-                                    ("YouTube CV","https://www.youtube.com/results?search_query=computer+vision+course+free")],
-                "Model Deployment": [("FastAPI Docker","https://www.youtube.com/results?search_query=fastapi+docker+deployment+tutorial"),
-                                     ("AWS/GCP Docs","https://cloud.google.com/community/tutorials"),
-                                     ("FreeCodeCamp Deployment","https://www.freecodecamp.org/news/tag/deployment/")]
-            }
-            recs = curated.get(pred, [("FreeCodeCamp Search", f"https://www.freecodecamp.org/news/search/?query={pred}"),
-                                      ("Coursera Free", f"https://www.coursera.org/search?query={pred}&price=Free"),
-                                      ("YouTube", f"https://www.youtube.com/results?search_query={pred}+free+course")])
-            st.markdown("### Free Course Recommendations:")
-            for name, url in recs:
-                st.markdown(f"- [{name}]({url})")
+        input_df = pd.DataFrame([{
+            "Year_of_Study": year,
+            "Degree_Branch": branch,
+            "Career_Goal": goal,
+            "Python_Skill": skill_inputs.get("Python",3),
+            "Java_Skill": skill_inputs.get("Java",3),
+            "SQL_Skill": skill_inputs.get("SQL",3),
+            "WebDev_Skill": skill_inputs.get("WebDev",3),
+            "Communication_Skill": skill_inputs.get("Communication",3),
+            "ProblemSolving_Skill": skill_inputs.get("ProblemSolving",3),
+            "Completed_Courses": 0,
+            "Learning_Hours_per_Week": 0
+        }])
+        pipeline.fit(X, y)
+        pred = pipeline.predict(input_df)[0]
+        st_lottie_safe(LOTTIE_SUCCESS, height=160)
+        st.success(f"Predicted Missing Skill: {pred}")
 
-            skill_df = pd.DataFrame({
-                "skill": ["Python","Java","SQL","WebDev","Communication","ProblemSolving"],
-                "score": [py, java, sql, web, comm, prob]
-            })
-            fig = px.line_polar(skill_df, r="score", theta="skill", line_close=True, range_r=[0,5], title="Your Skill Profile")
-            st.plotly_chart(fig, use_container_width=True)
+        curated = {
+            "Cloud Computing": [("Google Cloud Fundamentals","https://www.coursera.org/learn/gcp-fundamentals"),
+                                ("AWS Cloud Practitioner Essentials","https://www.aws.training/Details/Curriculum?id=20685"),
+                                ("Azure Fundamentals","https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/")],
+            "Deep Learning": [("Deep Learning Specialization","https://www.coursera.org/specializations/deep-learning"),
+                              ("FreeCodeCamp Tutorials","https://www.freecodecamp.org/news/tag/deep-learning/"),
+                              ("YouTube Crash Course","https://www.youtube.com/results?search_query=deep+learning+course")],
+            "NLP": [("Coursera NLP","https://www.coursera.org/search?query=natural%20language%20processing&price=Free"),
+                    ("FreeCodeCamp NLP","https://www.freecodecamp.org/news/tag/nlp/"),
+                    ("YouTube NLP","https://www.youtube.com/results?search_query=nlp+tutorial")],
+            "Frontend Frameworks": [("freeCodeCamp Front End","https://www.freecodecamp.org/learn/front-end-development-libraries/"),
+                                    ("React Full Course","https://www.youtube.com/results?search_query=react+full+course+free"),
+                                    ("Coursera Frontend","https://www.coursera.org/search?query=frontend&price=Free")],
+            "DevOps": [("Google Cloud Training","https://cloud.google.com/training"),
+                       ("Microsoft Learn DevOps","https://learn.microsoft.com/en-us/training/browse/?terms=devops"),
+                       ("YouTube DevOps","https://www.youtube.com/results?search_query=devops+full+course+free")],
+            "Project Management": [("Google Project Management","https://www.coursera.org/professional-certificates/google-project-management"),
+                                   ("edX PM","https://www.edx.org/learn/project-management"),
+                                   ("YouTube PM","https://www.youtube.com/results?search_query=project+management+course+free")],
+            "Databases": [("Kaggle SQL","https://www.kaggle.com/learn/SQL"),
+                          ("Mode SQL Tutorial","https://mode.com/sql-tutorial/"),
+                          ("FreeCodeCamp SQL","https://www.freecodecamp.org/news/tag/sql/")],
+            "Computer Vision": [("Coursera CV","https://www.coursera.org/search?query=computer%20vision&price=Free"),
+                                ("FreeCodeCamp CV","https://www.freecodecamp.org/news/tag/computer-vision/"),
+                                ("YouTube CV","https://www.youtube.com/results?search_query=computer+vision+course+free")],
+            "Model Deployment": [("FastAPI Docker","https://www.youtube.com/results?search_query=fastapi+docker+deployment+tutorial"),
+                                 ("AWS/GCP Docs","https://cloud.google.com/community/tutorials"),
+                                 ("FreeCodeCamp Deployment","https://www.freecodecamp.org/news/tag/deployment/")]
+        }
+        recs = curated.get(pred, [("FreeCodeCamp Search", f"https://www.freecodecamp.org/news/search/?query={pred}"),
+                                  ("Coursera Free", f"https://www.coursera.org/search?query={pred}&price=Free"),
+                                  ("YouTube", f"https://www.youtube.com/results?search_query={pred}+free+course")])
+        st.markdown("### Free Course Recommendations:")
+        for name, url in recs:
+            st.markdown(f"- [{name}]({url})")
+
+        skill_df = pd.DataFrame({
+            "skill": ["Python","Java","SQL","WebDev","Communication","ProblemSolving"],
+            "score": [skill_inputs.get("Python",3), skill_inputs.get("Java",3), skill_inputs.get("SQL",3),
+                      skill_inputs.get("WebDev",3), skill_inputs.get("Communication",3), skill_inputs.get("ProblemSolving",3)]
+        })
+        fig = px.line_polar(skill_df, r="score", theta="skill", line_close=True, range_r=[0,5], title="Your Skill Profile")
+        st.plotly_chart(fig, use_container_width=True)
 
 st.markdown("---")
 st.header("4) Progress Tracker")
