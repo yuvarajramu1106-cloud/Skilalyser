@@ -87,9 +87,7 @@ use_sample = st.checkbox("Use sample dataset", value=False)
 def create_sample_data():
     data = {
         "Year_of_Study": ["2nd", "3rd", "4th", "2nd", "3rd"],
-        "Degree_Branch": [
-            "B.E CSE", "B.E ECE", "B.E AIML", "B.E EEE", "B.E IT"
-        ],
+        "Degree_Branch": ["B.E CSE", "B.E ECE", "B.E AIML", "B.E EEE", "B.E IT"],
         "Python_Skill(1-5)": [4, 3, 5, 2, 1],
         "Java_Skill(1-5)": [3, 4, 2, 3, 2],
         "C_C++_Skill(1-5)": [4, 2, 5, 1, 2],
@@ -196,14 +194,18 @@ with col5:
 
 certification = st.selectbox("🏅 Recent Certification", sorted(df["Recent_Certifications"].unique()))
 
-# Load a professional Lottie animation
+# Professional Lottie Animation Loader
 def load_lottieurl(url: str):
-    r = requests.get(url)
-    if r.status_code != 200:
+    try:
+        r = requests.get(url)
+        if r.status_code != 200:
+            return None
+        return r.json()
+    except:
         return None
-    return r.json()
 
-success_anim = load_lottieurl("https://lottie.host/8e10aeb4-1f4e-4d8a-8a3a-75b62f84d64a/animation.json")  # professional animation
+# A reliable professional Lottie animation (career success theme)
+success_anim = load_lottieurl("https://assets2.lottiefiles.com/packages/lf20_touohxv0.json")
 
 if st.button("✨ Analyze My Skill Gap"):
     try:
@@ -220,7 +222,8 @@ if st.button("✨ Analyze My Skill Gap"):
         input_data["Desired_Role"] = desired_role
         input_data["Recent_Certifications"] = certification
 
-        input_data = input_data[X.columns]
+        # ✅ Reindex safely in case of missing columns
+        input_data = input_data.reindex(columns=X.columns, fill_value=0)
 
         pred = pipeline.predict(input_data)
         predicted_skill = le.inverse_transform(pred)[0]
@@ -229,102 +232,13 @@ if st.button("✨ Analyze My Skill Gap"):
             st.success(f"🎯 Predicted Missing Skill: **{predicted_skill}**")
             st.info(f"💡 Focus on improving **{predicted_skill}** to align with your career goal: **{goal}**")
 
-        st_lottie(success_anim, height=200, key="success_anim")
+        # ✅ Professional animation
+        if success_anim:
+            st_lottie(success_anim, height=200, key="success_anim")
+        else:
+            st.info("✅ Analysis completed successfully!")
 
     except Exception as e:
         st.error(f"⚠ Prediction failed: {e}")
 
-st.markdown(("</div>", unsafe_allow_html=True)    ("model", model)
-)
-
-# Train/test split
-X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.25, random_state=42)
-
-# Train model
-pipeline.fit(X_train, y_train)
-y_pred = pipeline.predict(X_test)
-
-# Evaluation
-col3, col4 = st.columns(2)
-with col3:
-    st.subheader("📈 Model Accuracy")
-    st.metric("Accuracy", f"{accuracy_score(y_test, y_pred)*100:.2f}%")
-with col4:
-    st.subheader("📋 Classification Report")
-    st.text(classification_report(y_test, y_pred, target_names=le.classes_, zero_division=0))
-
-st.markdown("---")
-
-# ---------------------------------
-# 🔮 Skill Gap Prediction
-# ---------------------------------
-st.header("🔮 Skill Gap Prediction")
-
-col5, col6 = st.columns(2)
-with col5:
-    year = st.selectbox("Year of Study", sorted(df["Year_of_Study"].unique()))
-    branch = st.selectbox("Degree Branch", sorted(df["Degree_Branch"].unique()))
-    goal = st.selectbox("Career Goal", sorted(df["Career_Goal"].unique()))
-    interest = st.selectbox("Industry Interest", sorted(df["Industry_Interest"].unique()))
-    method = st.selectbox("Learning Method", sorted(df["Learning_Method"].unique()))
-    training = st.selectbox("Last Training", sorted(df["Last_Training"].unique()))
-    desired_role = st.selectbox("Desired Role", sorted(df["Desired Role"].unique()))
-
-with col6:
-    py = st.slider("Python Skill (1-5)", 1, 5, 3)
-    java = st.slider("Java Skill (1-5)", 1, 5, 3)
-    cpp = st.slider("C/C++ Skill (1-5)", 1, 5, 3)
-    sql = st.slider("SQL Skill (1-5)", 1, 5, 3)
-    web = st.slider("WebDev Skill (1-5)", 1, 5, 3)
-    comm = st.slider("Communication Skill (1-5)", 1, 5, 3)
-    prob = st.slider("Problem Solving Skill (1-5)", 1, 5, 3)
-    lead = st.slider("Leadership Skill (1-5)", 1, 5, 3)
-    team = st.slider("Teamwork Skill (1-5)", 1, 5, 3)
-    confidence = st.slider("Confidence Level (1-10)", 1, 10, 7)
-    completed_courses = st.number_input("Completed Courses", min_value=0, max_value=20, value=3)
-    learning_hours = st.number_input("Learning Hours per Week", min_value=0, max_value=50, value=8)
-    challenges = st.text_input("Challenges", "Time management")
-    need_reco = st.selectbox("Need Recommendations?", ["Yes", "No"])
-
-# Build prediction DataFrame
-input_data = pd.DataFrame([{
-    "Year_of_Study": year,
-    "Degree_Branch": branch,
-    "Python_Skill(1-5)": py,
-    "Java_Skill(1-5)": java,
-    "C_C++_Skill(1-5)": cpp,
-    "SQL_Skill(1-5)": sql,
-    "WebDev_Skill(1-5)": web,
-    "Communication_Skill(1-5)": comm,
-    "ProblemSolving_Skill(1-5)": prob,
-    "Leadership_Skill(1-5)": lead,
-    "Teamwork_Skill(1-5)": team,
-    "Completed_Courses": completed_courses,
-    "Career_Goal": goal,
-    "Industry_Interest": interest,
-    "Learning_Hours_per_Week": learning_hours,
-    "Learning_Method": method,
-    "Last_Training": training,
-    "Desired Role": desired_role,
-    "Confidence_Level(1-10)": confidence,
-    "Challenges": challenges,
-    "Need_Recommendations": need_reco
-}])
-
-if st.button("🔍 Analyze Skill Gap"):
-    try:
-        # Ensure input columns match
-        for col in numeric_features:
-            input_data[col] = pd.to_numeric(input_data[col], errors='coerce').fillna(0)
-        for col in categorical_features:
-            input_data[col] = input_data[col].astype(str).fillna("Unknown")
-
-        input_data = input_data[X.columns]
-
-        pred = pipeline.predict(input_data)
-        predicted_skill = le.inverse_transform(pred)[0]
-        st.success(f"🎯 Predicted Missing Skill: **{predicted_skill}**")
-        st.info(f"💡 Suggestion: Focus on improving your *{predicted_skill}* through courses, workshops, or projects.")
-        st.balloons()
-    except Exception as e:
-        st.error(f"⚠️ Prediction failed: {e}")
+st.markdown("</div>", unsafe_allow_html=True)
