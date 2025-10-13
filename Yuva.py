@@ -235,7 +235,7 @@ if st.button("✨ Analyze My Skill Gap"):
         st.error(f"⚠ Prediction failed: {e}")
 
 st.markdown("</div>", unsafe_allow_html=True)    ("model", model)
-])
+)
 
 # Train/test split
 X_train, X_test, y_train, y_test = train_test_split(X, y_encoded, test_size=0.25, random_state=42)
