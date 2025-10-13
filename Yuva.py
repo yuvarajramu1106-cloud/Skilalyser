@@ -10,14 +10,24 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 import plotly.express as px
 
-st.set_page_config(page_title="Skill Gap Analyzer — PRO", layout="wide", page_icon="💼")
+st.set_page_config(page_title="Skill Gap Analyzer", layout="wide", page_icon="💼")
+
 st.markdown("""
 <style>
-[data-testid="stAppViewContainer"] { background: linear-gradient(135deg,#0f172a,#1e293b); color: #e6eef6;}
+[data-testid="stAppViewContainer"] { 
+    background: linear-gradient(135deg,#0f172a,#1e293b); 
+    color: #ffffff !important;
+}
 .main-title { text-align:center; font-size:2.4rem; color:#7cfff0; font-weight:700; }
 .card { background: rgba(255,255,255,0.04); padding:16px; border-radius:12px; box-shadow: 0 6px 18px rgba(2,6,23,0.6); }
-.small { font-size:0.9rem; color:#cfe9f5 }
-h3 { color: #00F5A0; font-weight:600; }
+.small { font-size:0.9rem; color:#cfe9f5 !important;}
+h3 { color:#00F5A0 !important; font-weight:600; }
+h4 { color:#ADFF2F !important; }
+h5 { color:#00FFFF !important; }
+p, label, span, div { color:#e6eef6 !important; }
+a { color:#FF69B4 !important; text-decoration:none; }
+.stSlider > div > div[data-baseweb="slider"] > div { background: #1e293b !important; }
+.stButton > button { background: linear-gradient(90deg, #00DBDE, #FC00FF) !important; color: #ffffff !important; border-radius: 8px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -83,7 +93,7 @@ def generate_synthetic_data(n=500, random_state=42):
         })
     return pd.DataFrame(rows)
 
-st.markdown("<div class='card'><h1 class='main-title'>Skill Gap Analyzer — PRO</h1></div>", unsafe_allow_html=True)
+st.markdown("<div class='card'><h1 class='main-title'>Skill Gap Analyzer</h1></div>", unsafe_allow_html=True)
 st.markdown("---")
 st.header("1) Dataset — Generate or Upload")
 
@@ -93,7 +103,7 @@ with col_a:
     if st.button("Generate Synthetic Dataset"):
         df_generated = generate_synthetic_data(n=synth_size)
         st.success(f"Synthetic dataset created: {len(df_generated)} records")
-        st.dataframe(df_generated.head(10))
+        st.dataframe(df_generated.head(10).style.set_properties(**{'color':'#e6eef6','background-color':'#1e293b'}))
         st.session_state["df"] = df_generated
 with col_b:
     uploaded = st.file_uploader("Upload CSV/XLSX", type=["csv","xlsx"])
@@ -108,7 +118,7 @@ with col_b:
             else:
                 st.session_state["df"] = df_up.copy()
                 st.success("Dataset loaded.")
-                st.dataframe(df_up.head())
+                st.dataframe(df_up.head(10).style.set_properties(**{'color':'#e6eef6','background-color':'#1e293b'}))
         except Exception as e:
             st.error(f"Load error: {e}")
 
@@ -210,4 +220,28 @@ with st.form("predict_form"):
                        ("YouTube DevOps","https://www.youtube.com/results?search_query=devops+full+course+free")],
             "Project Management": [("Google Project Management","https://www.coursera.org/professional-certificates/google-project-management"),
                                    ("edX PM","https://www.edx.org/learn/project-management"),
-                                   ("YouTube PM
+                                   ("YouTube PM","https://www.youtube.com/results?search_query=project+management+course+free")],
+            "Databases": [("Kaggle SQL","https://www.kaggle.com/learn/SQL"),
+                          ("Mode SQL Tutorial","https://mode.com/sql-tutorial/"),
+                          ("FreeCodeCamp SQL","https://www.freecodecamp.org/news/tag/sql/")],
+            "Computer Vision": [("Coursera CV","https://www.coursera.org/search?query=computer%20vision&price=Free"),
+                                ("FreeCodeCamp CV","https://www.freecodecamp.org/news/tag/computer-vision/"),
+                                ("YouTube CV","https://www.youtube.com/results?search_query=computer+vision+course+free")],
+            "Model Deployment": [("FastAPI Docker","https://www.youtube.com/results?search_query=fastapi+docker+deployment+tutorial"),
+                                 ("AWS/GCP Docs","https://cloud.google.com/community/tutorials"),
+                                 ("FreeCodeCamp Deployment","https://www.freecodecamp.org/news/tag/deployment/")]
+        }
+        recs = curated.get(pred, [("FreeCodeCamp Search", f"https://www.freecodecamp.org/news/search/?query={pred}"),
+                                  ("Coursera Free", f"https://www.coursera.org/search?query={pred}&price=Free"),
+                                  ("YouTube", f"https://www.youtube.com/results?search_query={pred}+free+course")])
+        st.markdown("### Free Course Recommendations:")
+        for name, url in recs:
+            st.markdown(f"- [{name}]({url})")
+
+        skill_df = pd.DataFrame({
+            "skill": ["Python","Java","SQL","WebDev","Communication","ProblemSolving"],
+            "score": [skill_inputs.get("Python",3), skill_inputs.get("Java",3), skill_inputs.get("SQL",3),
+                      skill_inputs.get("WebDev",3), skill_inputs.get("Communication",3), skill_inputs.get("ProblemSolving",3)]
+        })
+        fig = px.line_polar(skill_df, r="score", theta="skill", line_close=True, range_r=[0,5], title="Your Skill Profile")
+        st.plotly_chart(fig, use_container_width=True)
