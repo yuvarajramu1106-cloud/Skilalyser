@@ -130,7 +130,14 @@ X = df.drop(columns=[target])
 y = df[target].astype(str)
 numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
 cat_cols = X.select_dtypes(include=['object']).columns.tolist()
-preprocessor = ColumnTransformer([("num", StandardScaler(), numeric_cols), ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_cols)])
+
+transformers = []
+if numeric_cols:
+    transformers.append(("num", StandardScaler(), numeric_cols))
+if cat_cols:
+    transformers.append(("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_cols))
+
+preprocessor = ColumnTransformer(transformers)
 rf = RandomForestClassifier(random_state=42)
 pipeline = Pipeline([("pre", preprocessor), ("clf", rf)])
 param_grid = {"clf__n_estimators": [150, 250], "clf__max_depth": [None, 12], "clf__min_samples_split": [2, 5]}
@@ -181,59 +188,3 @@ with st.form("predict_form"):
                 "WebDev_Skill": web,
                 "Communication_Skill": comm,
                 "ProblemSolving_Skill": prob,
-                "Completed_Courses": 0,
-                "Learning_Hours_per_Week": 0
-            }])
-            pred = st.session_state["model"].predict(input_df)[0]
-            st_lottie_safe(LOTTIE_SUCCESS, height=160)
-            st.success(f"Predicted Missing Skill: {pred}")
-            st.info("Recommended free courses below.")
-            if "progress" not in st.session_state:
-                st.session_state["progress"] = []
-            st.session_state["progress"].append({
-                "timestamp": datetime.utcnow().isoformat(),
-                "branch": branch, "year": year, "goal": goal,
-                "python": py, "java": java, "sql": sql, "webdev": web,
-                "comm": comm, "problem": prob, "predicted_missing": pred
-            })
-            skill_df = pd.DataFrame({"skill": ["Python","Java","SQL","WebDev","Communication","ProblemSolving"],"score": [py, java, sql, web, comm, prob]})
-            fig = px.line_polar(skill_df, r="score", theta="skill", line_close=True, title="Your Skill Profile", range_r=[0,5])
-            st.plotly_chart(fig, use_container_width=True)
-            curated = {
-                "Cloud Computing": [("Google Cloud Fundamentals","https://www.coursera.org/learn/gcp-fundamentals"),("AWS Cloud Practitioner Essentials","https://www.aws.training/Details/Curriculum?id=20685"),("Azure Fundamentals","https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/")],
-                "Deep Learning": [("Deep Learning Specialization","https://www.coursera.org/specializations/deep-learning"),("FreeCodeCamp Tutorials","https://www.freecodecamp.org/news/tag/deep-learning/"),("YouTube Crash Course","https://www.youtube.com/results?search_query=deep+learning+course")],
-                "NLP": [("Coursera NLP","https://www.coursera.org/search?query=natural%20language%20processing&price=Free"),("FreeCodeCamp NLP","https://www.freecodecamp.org/news/tag/nlp/"),("YouTube NLP","https://www.youtube.com/results?search_query=nlp+tutorial")],
-                "Frontend Frameworks": [("freeCodeCamp Front End","https://www.freecodecamp.org/learn/front-end-development-libraries/"),("React Full Course","https://www.youtube.com/results?search_query=react+full+course+free"),("Coursera Frontend","https://www.coursera.org/search?query=frontend&price=Free")],
-                "DevOps": [("Google Cloud Training","https://cloud.google.com/training"),("Microsoft Learn DevOps","https://learn.microsoft.com/en-us/training/browse/?terms=devops"),("YouTube DevOps","https://www.youtube.com/results?search_query=devops+full+course+free")],
-                "Project Management": [("Google Project Management","https://www.coursera.org/professional-certificates/google-project-management"),("edX PM","https://www.edx.org/learn/project-management"),("YouTube PM","https://www.youtube.com/results?search_query=project+management+course+free")],
-                "Databases": [("Kaggle SQL","https://www.kaggle.com/learn/SQL"),("Mode SQL Tutorial","https://mode.com/sql-tutorial/"),("FreeCodeCamp SQL","https://www.freecodecamp.org/news/tag/sql/")],
-                "Computer Vision": [("Coursera CV","https://www.coursera.org/search?query=computer%20vision&price=Free"),("FreeCodeCamp CV","https://www.freecodecamp.org/news/tag/computer-vision/"),("YouTube CV","https://www.youtube.com/results?search_query=computer+vision+course+free")],
-                "Model Deployment": [("FastAPI Docker","https://www.youtube.com/results?search_query=fastapi+docker+deployment+tutorial"),("AWS/GCP Docs","https://cloud.google.com/community/tutorials"),("FreeCodeCamp Deployment","https://www.freecodecamp.org/news/tag/deployment/")]
-            }
-            recs = curated.get(pred, [("FreeCodeCamp Search", f"https://www.freecodecamp.org/news/search/?query={pred}"),("Coursera Free", f"https://www.coursera.org/search?query={pred}&price=Free"),("YouTube", f"https://www.youtube.com/results?search_query={pred}+free+course")])
-            for name, url in recs:
-                st.markdown(f"- [{name}]({url})")
-
-st.markdown("---")
-st.header("4) Progress Tracker")
-if "progress" in st.session_state and st.session_state["progress"]:
-    progress_df = pd.DataFrame(st.session_state["progress"])
-    st.dataframe(progress_df.tail(10))
-    csv = progress_df.to_csv(index=False).encode("utf-8")
-    st.download_button("Download Progress CSV", data=csv, file_name="skillgap_progress.csv", mime="text/csv")
-else:
-    st.info("No progress yet.")
-
-st.markdown("---")
-st.header("5) Professional Upgrade Suggestions")
-st.markdown("""
-- Collect 1000+ real student records
-- Add GPA, project count, internships
-- Try XGBoost / LightGBM
-- Add SHAP explainability
-- Rank free courses by engagement
-- Store data in SQLite / Airtable
-- Resume parser for auto skill extraction
-- CI/CD with GitHub Actions
-""")
-st.markdown("<div style='text-align:center; color:#9fb3c8'>Skill Gap Analyzer — PRO • Free Courses • Professional UI</div>", unsafe_allow_html=True)
