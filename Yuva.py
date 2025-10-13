@@ -11,16 +11,20 @@ from sklearn.metrics import accuracy_score
 import plotly.express as px
 
 st.set_page_config(page_title="Skill Gap Analyzer — PRO", layout="wide", page_icon="💼")
+
+# CSS Styling
 st.markdown("""
 <style>
-[data-testid="stAppViewContainer"] { background: linear-gradient(135deg,#0f172a,#1e293b); color: #e6eef6;}
-.main-title { text-align:center; font-size:2.4rem; color:#7cfff0; font-weight:700; }
+[data-testid="stAppViewContainer"] { background: linear-gradient(135deg,#0f172a,#1e293b); color: #E0FFFF;}
+.main-title { text-align:center; font-size:2.4rem; color:#00F5A0; font-weight:700; }
 .card { background: rgba(255,255,255,0.04); padding:16px; border-radius:12px; box-shadow: 0 6px 18px rgba(2,6,23,0.6); }
+h3, h4, h5 { color: #FFD700; }
 .small { font-size:0.9rem; color:#cfe9f5 }
-h3 { color: #00F5A0; font-weight:600; }
+a { color:#ADFF2F; text-decoration:none; }
 </style>
 """, unsafe_allow_html=True)
 
+# Load Lottie JSON animation
 def load_lottie_url(url):
     try:
         r = requests.get(url, timeout=6)
@@ -39,6 +43,7 @@ def st_lottie_safe(lottie_json, height=150):
 
 LOTTIE_SUCCESS = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_jbrw3hcz.json")
 
+# Synthetic Dataset Generator
 @st.cache_data
 def generate_synthetic_data(n=500, random_state=42):
     np.random.seed(random_state)
@@ -83,17 +88,18 @@ def generate_synthetic_data(n=500, random_state=42):
         })
     return pd.DataFrame(rows)
 
-st.markdown("<div class='card'><h1 class='main-title'>Skill Gap Analyzer — PRO</h1></div>", unsafe_allow_html=True)
-st.markdown("---")
-st.header("1) Dataset — Generate or Upload")
+st.markdown("<h1 class='main-title'>Skill Gap Analyzer — PRO</h1>", unsafe_allow_html=True)
+st.markdown("<hr style='border:1px solid #00F5A0'>", unsafe_allow_html=True)
 
+# Dataset Upload / Generate
+st.header("1) Dataset — Generate or Upload")
 col_a, col_b = st.columns([2,1])
 with col_a:
     synth_size = st.slider("Synthetic dataset size", 200, 2000, 500, step=100)
     if st.button("Generate Synthetic Dataset"):
         df_generated = generate_synthetic_data(n=synth_size)
         st.success(f"Synthetic dataset created: {len(df_generated)} records")
-        st.dataframe(df_generated.head(10))
+        st.dataframe(df_generated.head(10).style.set_properties(**{'color': '#E0FFFF', 'background-color': '#1e293b'}))
         st.session_state["df"] = df_generated
 with col_b:
     uploaded = st.file_uploader("Upload CSV/XLSX", type=["csv","xlsx"])
@@ -108,7 +114,7 @@ with col_b:
             else:
                 st.session_state["df"] = df_up.copy()
                 st.success("Dataset loaded.")
-                st.dataframe(df_up.head())
+                st.dataframe(df_up.head().style.set_properties(**{'color': '#E0FFFF', 'background-color': '#1e293b'}))
         except Exception as e:
             st.error(f"Load error: {e}")
 
@@ -118,33 +124,27 @@ else:
     df = generate_synthetic_data(n=500)
     st.session_state["df"] = df
 
+# Model Accuracy
 st.markdown("---")
 st.header("2) Model Accuracy")
+target = "Missing_Skill"
+X = df.drop(columns=[target])
+y = df[target].astype(str)
+numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
+cat_cols = X.select_dtypes(include=['object']).columns.tolist()
+transformers = []
+if numeric_cols: transformers.append(("num", StandardScaler(), numeric_cols))
+if cat_cols: transformers.append(("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_cols))
+preprocessor = ColumnTransformer(transformers)
+rf = RandomForestClassifier(random_state=42)
+pipeline = Pipeline([("pre", preprocessor), ("clf", rf)])
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+pipeline.fit(X_train, y_train)
+y_pred = pipeline.predict(X_test)
+test_acc = accuracy_score(y_test, y_pred) * 100
+st.markdown(f"<h3>Model Test Accuracy: {test_acc:.2f}%</h3>", unsafe_allow_html=True)
 
-if "df" in st.session_state:
-    target = "Missing_Skill"
-    X = df.drop(columns=[target])
-    y = df[target].astype(str)
-    numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
-    cat_cols = X.select_dtypes(include=['object']).columns.tolist()
-
-    transformers = []
-    if numeric_cols: transformers.append(("num", StandardScaler(), numeric_cols))
-    if cat_cols: transformers.append(("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_cols))
-    preprocessor = ColumnTransformer(transformers)
-
-    rf = RandomForestClassifier(random_state=42)
-    pipeline = Pipeline([("pre", preprocessor), ("clf", rf)])
-
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
-    pipeline.fit(X_train, y_train)
-    y_pred = pipeline.predict(X_test)
-    test_acc = accuracy_score(y_test, y_pred) * 100
-
-    st.markdown(f"<h3>Model Test Accuracy: {test_acc:.2f}%</h3>", unsafe_allow_html=True)
-else:
-    st.info("Model not trained yet or dataset missing.")
-
+# Dynamic Skill Prediction
 st.markdown("---")
 st.header("3) Predict Missing Skill Dynamically")
 
@@ -166,11 +166,12 @@ with st.form("predict_form"):
         year = st.selectbox("Year of Study", sorted(df["Year_of_Study"].unique()))
         goal = st.selectbox("Career Goal", sorted(df["Career_Goal"].unique()))
     with col2:
-        st.markdown("### Relevant Skills")
+        st.markdown("<h4>Relevant Skills</h4>", unsafe_allow_html=True)
         skills_to_show = career_skills.get(goal, ["Python","Java","SQL","WebDev","Communication","ProblemSolving"])
         skill_inputs = {}
         for skill in skills_to_show:
-            skill_inputs[skill] = st.slider(f"{skill} Skill (1-5)", 1, 5, 3)
+            st.markdown(f"<span style='color:#7CFFF0'>{skill} Skill (1-5)</span>", unsafe_allow_html=True)
+            skill_inputs[skill] = st.slider("", 1, 5, 3)
 
     submitted = st.form_submit_button("Analyze My Skill Gap")
     if submitted:
@@ -187,7 +188,6 @@ with st.form("predict_form"):
             "Completed_Courses": 0,
             "Learning_Hours_per_Week": 0
         }])
-        pipeline.fit(X, y)
         pred = pipeline.predict(input_df)[0]
         st_lottie_safe(LOTTIE_SUCCESS, height=160)
         st.success(f"Predicted Missing Skill: {pred}")
@@ -222,29 +222,16 @@ with st.form("predict_form"):
                                  ("FreeCodeCamp Deployment","https://www.freecodecamp.org/news/tag/deployment/")]
         }
         recs = curated.get(pred, [("FreeCodeCamp Search", f"https://www.freecodecamp.org/news/search/?query={pred}"),
-                                  ("Coursera Free", f"https://www.coursera.org/search?query={pred}&price=Free"),
-                                  ("YouTube", f"https://www.youtube.com/results?search_query={pred}+free+course")])
-        st.markdown("### Free Course Recommendations:")
-        for name, url in recs:
-            st.markdown(f"- [{name}]({url})")
+                                  ("Coursera Free", f"https://www.coursera.org/search?query={pred}&price=Free")])
+        st.markdown("<h4>Recommended Free Courses:</h4>", unsafe_allow_html=True)
+        for name,url in recs:
+            st.markdown(f"<a href='{url}' target='_blank'>{name}</a>", unsafe_allow_html=True)
 
+        # Radar chart visualization
         skill_df = pd.DataFrame({
-            "skill": ["Python","Java","SQL","WebDev","Communication","ProblemSolving"],
-            "score": [skill_inputs.get("Python",3), skill_inputs.get("Java",3), skill_inputs.get("SQL",3),
-                      skill_inputs.get("WebDev",3), skill_inputs.get("Communication",3), skill_inputs.get("ProblemSolving",3)]
+            "skill": list(skill_inputs.keys()),
+            "score": list(skill_inputs.values())
         })
-        fig = px.line_polar(skill_df, r="score", theta="skill", line_close=True, range_r=[0,5], title="Your Skill Profile")
+        fig = px.line_polar(skill_df, r="score", theta="skill", line_close=True,
+                            range_r=[0,5], template="plotly_dark", title="Your Skill Profile")
         st.plotly_chart(fig, use_container_width=True)
-
-st.markdown("---")
-st.header("4) Progress Tracker")
-if "progress" not in st.session_state:
-    st.session_state["progress"] = []
-
-if st.session_state["progress"]:
-    progress_df = pd.DataFrame(st.session_state["progress"])
-    st.dataframe(progress_df.tail(10))
-    csv = progress_df.to_csv(index=False).encode("utf-8")
-    st.download_button("Download Progress CSV", data=csv, file_name="skillgap_progress.csv", mime="text/csv")
-else:
-    st.info("No progress yet.")
