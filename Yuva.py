@@ -130,7 +130,7 @@ X = df.drop(columns=[target])
 y = df[target].astype(str)
 numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
 cat_cols = X.select_dtypes(include=['object']).columns.tolist()
-preprocessor = ColumnTransformer([("num", StandardScaler(), numeric_cols), ("cat", OneHotEncoder(handle_unknown="ignore", sparse=False), cat_cols)])
+preprocessor = ColumnTransformer([("num", StandardScaler(), numeric_cols), ("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_cols)])
 rf = RandomForestClassifier(random_state=42)
 pipeline = Pipeline([("pre", preprocessor), ("clf", rf)])
 param_grid = {"clf__n_estimators": [150, 250], "clf__max_depth": [None, 12], "clf__min_samples_split": [2, 5]}
