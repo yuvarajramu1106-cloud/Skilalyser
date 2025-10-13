@@ -12,14 +12,34 @@ import requests
 
 st.set_page_config(page_title="Skill Gap Analyzer — PRO", layout="wide", page_icon="💼")
 
-# CSS Styling
+# CSS Styling for dark theme and white/light font
 st.markdown("""
 <style>
-[data-testid="stAppViewContainer"] { background: linear-gradient(135deg,#0f172a,#1e293b); color: #E0FFFF;}
-.main-title { text-align:center; font-size:2.4rem; color:#00F5A0; font-weight:700; }
-h3, h4, h5 { color: #FFD700; }
-.small { font-size:0.9rem; color:#cfe9f5 }
-a { color:#ADFF2F; text-decoration:none; }
+[data-testid="stAppViewContainer"] {
+    background: linear-gradient(135deg,#0f172a,#1e293b);
+    color: #FFFFFF !important;
+}
+.main-title { 
+    text-align:center; 
+    font-size:2.4rem; 
+    color:#00F5A0 !important; 
+    font-weight:700; 
+}
+h3, h4, h5, h6, p, label, span, div {
+    color: #FFFFFF !important;
+}
+a { 
+    color:#ADFF2F !important; 
+    text-decoration:none; 
+}
+.stSlider > div > div[data-baseweb="slider"] > div { 
+    background: #1e293b !important; 
+}
+.stButton > button {
+    background: linear-gradient(90deg, #00DBDE, #FC00FF) !important;
+    color: #FFFFFF !important;
+    border-radius: 8px;
+}
 </style>
 """, unsafe_allow_html=True)
 
@@ -32,7 +52,15 @@ def load_lottie_url(url):
     except:
         return None
 
-LOTTIE_SUCCESS = load_lottie_url("https://assets2.lottiefiles.com/packages/lf20_jbrw3hcz.json")
+def st_lottie_safe(lottie_json, height=150):
+    try:
+        from streamlit_lottie import st_lottie
+        if lottie_json:
+            st_lottie(lottie_json, height=height)
+    except:
+        pass
+
+LOTTIE_SUCCESS = load_lottie_url("https://assets7.lottiefiles.com/packages/lf20_sSF6EG.json")
 
 # Synthetic Data Generator
 @st.cache_data
@@ -80,7 +108,7 @@ def generate_synthetic_data(n=500, random_state=42):
     return pd.DataFrame(rows)
 
 # Title
-st.markdown("<h1 class='main-title'>Skill Gap Analyzer — PRO</h1>", unsafe_allow_html=True)
+st.markdown("<h1 class='main-title'>💼 Skill Gap Analyzer — PRO</h1>", unsafe_allow_html=True)
 st.markdown("<hr style='border:1px solid #00F5A0'>", unsafe_allow_html=True)
 
 # Dataset Section
@@ -91,7 +119,7 @@ with col1:
     if st.button("Generate Synthetic Dataset"):
         df_generated = generate_synthetic_data(n=synth_size)
         st.session_state["df"] = df_generated
-        st.dataframe(df_generated.head(10).style.set_properties(**{'color': '#E0FFFF', 'background-color': '#1e293b'}))
+        st.dataframe(df_generated.head(10).style.set_properties(**{'color': '#FFFFFF', 'background-color': '#1e293b'}))
 with col2:
     uploaded = st.file_uploader("Upload CSV/XLSX", type=["csv","xlsx"])
     if uploaded:
@@ -100,7 +128,7 @@ with col2:
         else:
             df_up = pd.read_excel(uploaded)
         st.session_state["df"] = df_up
-        st.dataframe(df_up.head(10).style.set_properties(**{'color': '#E0FFFF', 'background-color': '#1e293b'}))
+        st.dataframe(df_up.head(10).style.set_properties(**{'color': '#FFFFFF', 'background-color': '#1e293b'}))
 
 # Load dataset
 if "df" in st.session_state:
@@ -109,7 +137,7 @@ else:
     df = generate_synthetic_data(n=500)
     st.session_state["df"] = df
 
-# Model Training Section
+# Model Accuracy Section
 st.markdown("---")
 st.header("2) Model Accuracy")
 X = df.drop(columns=["Missing_Skill"])
@@ -172,11 +200,13 @@ if submitted:
         "Learning_Hours_per_Week": 0
     }])
     pred_skill = pipeline.predict(input_data)[0]
+    st_lottie_safe(LOTTIE_SUCCESS, height=200)
     st.success(f"Predicted Missing Skill: {pred_skill}")
 
     # Radar chart
     skill_df = pd.DataFrame({"Skill": list(skill_inputs.keys()), "Score": list(skill_inputs.values())})
-    fig = px.line_polar(skill_df, r="Score", theta="Skill", line_close=True, range_r=[0,5], title="Your Skill Profile", template="plotly_dark")
+    fig = px.line_polar(skill_df, r="Score", theta="Skill", line_close=True, range_r=[0,5], 
+                        title="Your Skill Profile", template="plotly_dark")
     st.plotly_chart(fig, use_container_width=True)
 
     # Free course recommendations
