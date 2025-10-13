@@ -131,60 +131,77 @@ y = df[target].astype(str)
 numeric_cols = X.select_dtypes(include=[np.number]).columns.tolist()
 cat_cols = X.select_dtypes(include=['object']).columns.tolist()
 
-transformers = []
-if numeric_cols:
-    transformers.append(("num", StandardScaler(), numeric_cols))
-if cat_cols:
-    transformers.append(("cat", OneHotEncoder(handle_unknown="ignore", sparse_output=False), cat_cols))
+"Learning_Hours_per_Week": 0
+            }])
+            pred = st.session_state["model"].predict(input_df)[0]
+            st_lottie_safe(LOTTIE_SUCCESS, height=160)
+            st.success(f"Predicted Missing Skill: {pred}")
+            st.info("Recommended free courses below.")
+            curated = {
+                "Cloud Computing": [("Google Cloud Fundamentals","https://www.coursera.org/learn/gcp-fundamentals"),
+                                    ("AWS Cloud Practitioner Essentials","https://www.aws.training/Details/Curriculum?id=20685"),
+                                    ("Azure Fundamentals","https://learn.microsoft.com/en-us/training/paths/azure-fundamentals/")],
+                "Deep Learning": [("Deep Learning Specialization","https://www.coursera.org/specializations/deep-learning"),
+                                  ("FreeCodeCamp Tutorials","https://www.freecodecamp.org/news/tag/deep-learning/"),
+                                  ("YouTube Crash Course","https://www.youtube.com/results?search_query=deep+learning+course")],
+                "NLP": [("Coursera NLP","https://www.coursera.org/search?query=natural%20language%20processing&price=Free"),
+                        ("FreeCodeCamp NLP","https://www.freecodecamp.org/news/tag/nlp/"),
+                        ("YouTube NLP","https://www.youtube.com/results?search_query=nlp+tutorial")],
+                "Frontend Frameworks": [("freeCodeCamp Front End","https://www.freecodecamp.org/learn/front-end-development-libraries/"),
+                                        ("React Full Course","https://www.youtube.com/results?search_query=react+full+course+free"),
+                                        ("Coursera Frontend","https://www.coursera.org/search?query=frontend&price=Free")],
+                "DevOps": [("Google Cloud Training","https://cloud.google.com/training"),
+                           ("Microsoft Learn DevOps","https://learn.microsoft.com/en-us/training/browse/?terms=devops"),
+                           ("YouTube DevOps","https://www.youtube.com/results?search_query=devops+full+course+free")],
+                "Project Management": [("Google Project Management","https://www.coursera.org/professional-certificates/google-project-management"),
+                                       ("edX PM","https://www.edx.org/learn/project-management"),
+                                       ("YouTube PM","https://www.youtube.com/results?search_query=project+management+course+free")],
+                "Databases": [("Kaggle SQL","https://www.kaggle.com/learn/SQL"),
+                              ("Mode SQL Tutorial","https://mode.com/sql-tutorial/"),
+                              ("FreeCodeCamp SQL","https://www.freecodecamp.org/news/tag/sql/")],
+                "Computer Vision": [("Coursera CV","https://www.coursera.org/search?query=computer%20vision&price=Free"),
+                                    ("FreeCodeCamp CV","https://www.freecodecamp.org/news/tag/computer-vision/"),
+                                    ("YouTube CV","https://www.youtube.com/results?search_query=computer+vision+course+free")],
+                "Model Deployment": [("FastAPI Docker","https://www.youtube.com/results?search_query=fastapi+docker+deployment+tutorial"),
+                                     ("AWS/GCP Docs","https://cloud.google.com/community/tutorials"),
+                                     ("FreeCodeCamp Deployment","https://www.freecodecamp.org/news/tag/deployment/")]
+            }
+            recs = curated.get(pred, [("FreeCodeCamp Search", f"https://www.freecodecamp.org/news/search/?query={pred}"),
+                                      ("Coursera Free", f"https://www.coursera.org/search?query={pred}&price=Free"),
+                                      ("YouTube", f"https://www.youtube.com/results?search_query={pred}+free+course")])
+            for name, url in recs:
+                st.markdown(f"- [{name}]({url})")
 
-preprocessor = ColumnTransformer(transformers)
-rf = RandomForestClassifier(random_state=42)
-pipeline = Pipeline([("pre", preprocessor), ("clf", rf)])
-param_grid = {"clf__n_estimators": [150, 250], "clf__max_depth": [None, 12], "clf__min_samples_split": [2, 5]}
-st.info("Training model with GridSearchCV (3-fold)")
-with st.spinner("Training..."):
-    grid = GridSearchCV(pipeline, param_grid, cv=3, n_jobs=-1, scoring="accuracy", verbose=0)
-    grid.fit(X, y)
-    best_model = grid.best_estimator_
-    cv_score = grid.best_score_ * 100
-    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.20, random_state=42, stratify=y)
-    y_pred = best_model.predict(X_test)
-    test_acc = accuracy_score(y_test, y_pred) * 100
-    class_report = classification_report(y_test, y_pred, zero_division=0, output_dict=True)
-st.success(f"Training completed — CV accuracy: {cv_score:.2f}%  •  Test accuracy: {test_acc:.2f}%")
-st.write("Best parameters:", grid.best_params_)
-st.dataframe(pd.DataFrame(class_report).transpose().round(3))
-st.session_state["model"] = best_model
-st.session_state["features"] = {"numeric": numeric_cols, "categorical": cat_cols}
+            skill_df = pd.DataFrame({
+                "skill": ["Python","Java","SQL","WebDev","Communication","ProblemSolving"],
+                "score": [py, java, sql, web, comm, prob]
+            })
+            fig = px.line_polar(skill_df, r="score", theta="skill", line_close=True, range_r=[0,5], title="Your Skill Profile")
+            st.plotly_chart(fig, use_container_width=True)
+
 st.markdown("---")
-st.header("3) Predict Missing Skill")
+st.header("4) Progress Tracker")
+if "progress" not in st.session_state:
+    st.session_state["progress"] = []
 
-with st.form("predict_form"):
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        branch = st.selectbox("Degree Branch", sorted(df["Degree_Branch"].unique()))
-        year = st.selectbox("Year of Study", sorted(df["Year_of_Study"].unique()))
-        goal = st.selectbox("Career Goal", sorted(df["Career_Goal"].unique()))
-    with col2:
-        py = st.slider("Python Skill (1-5)", 1, 5, 3)
-        java = st.slider("Java Skill (1-5)", 1, 5, 3)
-        sql = st.slider("SQL Skill (1-5)", 1, 5, 3)
-    with col3:
-        web = st.slider("WebDev Skill (1-5)", 1, 5, 3)
-        comm = st.slider("Communication (1-5)", 1, 5, 3)
-        prob = st.slider("Problem Solving (1-5)", 1, 5, 3)
-    submitted = st.form_submit_button("Analyze My Skill Gap")
-    if submitted:
-        if "model" not in st.session_state:
-            st.error("Train model first.")
-        else:
-            input_df = pd.DataFrame([{
-                "Year_of_Study": year,
-                "Degree_Branch": branch,
-                "Career_Goal": goal,
-                "Python_Skill": py,
-                "Java_Skill": java,
-                "SQL_Skill": sql,
-                "WebDev_Skill": web,
-                "Communication_Skill": comm,
-                "ProblemSolving_Skill": prob,
+if st.session_state["progress"]:
+    progress_df = pd.DataFrame(st.session_state["progress"])
+    st.dataframe(progress_df.tail(10))
+    csv = progress_df.to_csv(index=False).encode("utf-8")
+    st.download_button("Download Progress CSV", data=csv, file_name="skillgap_progress.csv", mime="text/csv")
+else:
+    st.info("No progress yet.")
+
+st.markdown("---")
+st.header("5) Professional Upgrade Suggestions")
+st.markdown("""
+- Collect 1000+ real student records
+- Add GPA, project count, internships
+- Try XGBoost / LightGBM
+- Add SHAP explainability
+- Rank free courses by engagement
+- Store data in SQLite / Airtable
+- Resume parser for auto skill extraction
+- CI/CD with GitHub Actions
+""")
+st.markdown("<div style='text-align:center; color:#9fb3c8'>Skill Gap Analyzer — PRO • Free Courses • Professional UI</div>", unsafe_allow_html=True)
