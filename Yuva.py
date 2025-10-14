@@ -153,7 +153,7 @@ st.markdown("---")
 # 🎯 PREDICTION SECTION
 # ---------------------------------
 st.markdown("<div class='stContainer'>", unsafe_allow_html=True)
-st.header("🔮 Predict Missing Skill (Only 3 Questions)")
+st.header("🔮 Predict Missing Skill ")
 
 col1, col2, col3 = st.columns(3)
 with col1:
