@@ -1,133 +1,46 @@
-# skillgap_analyzer.py
 import streamlit as st
-import pandas as pd
+import cv2
 import numpy as np
-import requests
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, OneHotEncoder, LabelEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+from ultralytics import YOLO
 
-# ---------------------------------
-# 🌟 PAGE CONFIG
-# ---------------------------------
-st.set_page_config(page_title="Skill Gap Analyzer", layout="wide", page_icon="💼")
+st.title("Automatic Construction Material Counting")
 
-# Custom CSS Styling
-st.markdown("""
-<style>
-[data-testid="stAppViewContainer"] { background: linear-gradient(135deg, #1F1C2C, #928DAB); color: white; }
-.main-title { text-align: center; font-size: 2.5em; color: #00F5A0; text-shadow: 1px 1px 10px rgba(0,245,160,0.6); }
-.stContainer { background: rgba(255,255,255,0.08); padding: 1.5rem; border-radius: 20px; margin-bottom:20px; }
-div.stButton > button { background: linear-gradient(90deg, #00DBDE, #FC00FF); color: white; border-radius: 8px; font-weight:bold; transition:0.3s; }
-div.stButton > button:hover { transform: scale(1.05); background: linear-gradient(90deg, #FC00FF, #00DBDE); }
-div[data-baseweb="select"] > div { background-color: rgba(255,255,255,0.1); color:white !important; border-radius:8px; }
-h2,h3 { color:#FAD961; }
-[data-testid="stDataFrame"] { background-color: rgba(255,255,255,0.1); border-radius: 10px; }
-</style>
-""", unsafe_allow_html=True)
+# Load model
+model = YOLO("yolov8n.pt")
 
-# Lottie animation loader
-def load_lottie_url(url):
-    try:
-        r = requests.get(url, timeout=6)
-        if r.status_code == 200:
-            return r.json()
-    except:
-        return None
+# Upload image
+uploaded_file = st.file_uploader("Upload construction material image", type=["jpg","png"])
 
-def st_lottie_safe(lottie_json, height=150):
-    try:
-        from streamlit_lottie import st_lottie
-        if lottie_json:
-            st_lottie(lottie_json, height=height)
-    except:
-        pass
+if uploaded_file is not None:
+    file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
+    image = cv2.imdecode(file_bytes, 1)
 
-# Professional success animation
-LOTTIE_SUCCESS = load_lottie_url("https://assets10.lottiefiles.com/packages/lf20_jbrw3hcz.json") 
+    st.image(image, caption="Uploaded Image", use_column_width=True)
 
-# ---------------------------------
-# 🧠 HEADER
-# ---------------------------------
-st.markdown("<h1 class='main-title'>💼 Universal Skill Gap Analyzer</h1>", unsafe_allow_html=True)
-st.markdown("<p style='text-align:center; color:#EDEDED;'>Discover what’s holding you back — and bridge your skill gap today.</p>", unsafe_allow_html=True)
-st.markdown("---")
+    # Detection
+    results = model(image)
 
-# ---------------------------------
-# 📂 DATASET SECTION
-# ---------------------------------
-st.markdown("<div class='stContainer'>", unsafe_allow_html=True)
-st.header("📥 Upload or Use Sample Data")
+    brick = cement = steel = 0
 
-uploaded_file = st.file_uploader("Upload your dataset (CSV or XLSX)", type=["csv", "xlsx"])
-use_sample = st.checkbox("Use sample dataset", value=False)
+    for r in results:
+        for box in r.boxes:
+            cls = model.names[int(box.cls[0])]
+            if cls == "brick":
+                brick += 1
+            elif cls == "cement":
+                cement += 1
+            elif cls == "steel":
+                steel += 1
 
-def create_sample_data():
-    data = {
-        "Year_of_Study": ["2nd", "3rd", "4th", "2nd", "3rd"],
-        "Degree_Branch": ["CSE", "ECE", "AIML", "EEE", "CIVIL"],
-        "Python_Skill(1-5)": [4, 3, 5, 2, 1],
-        "Java_Skill(1-5)": [3, 4, 2, 3, 2],
-        "C_C++_Skill(1-5)": [4, 2, 5, 1, 2],
-        "SQL_Skill(1-5)": [3, 3, 4, 2, 1],
-        "WebDev_Skill(1-5)": [4, 2, 5, 3, 2],
-        "Communication_Skill(1-5)": [4, 5, 3, 4, 2],
-        "ProblemSolving_Skill(1-5)": [5, 4, 4, 3, 2],
-        "Leadership_Skill(1-5)": [3, 4, 3, 2, 1],
-        "Teamwork_Skill(1-5)": [5, 4, 3, 4, 3],
-        "Completed_Courses": [3, 5, 6, 2, 1],
-        "Career_Goal": ["Software Engineer", "Data Scientist", "AI Engineer", "Developer", "Civil Engineer"],
-        "Industry_Interest": ["IT", "AI", "AI", "Software", "Construction"],
-        "Learning_Hours_per_Week": [10, 12, 8, 5, 6],
-        "Learning_Method": ["Online", "Offline", "Online", "Hybrid", "Online"],
-        "Last_Training": ["Python", "ML", "DL", "Java", "AutoCAD"],
-        "Desired Role": ["Backend Developer", "ML Engineer", "AI Developer", "Frontend Dev", "Design Engineer"],
-        "Missing_Skills": ["Cloud", "Deep Learning", "NLP", "Frontend", "Project Management"],
-        "Confidence_Level(1-10)": [8, 7, 9, 6, 5],
-        "Challenges": ["Time management", "Lack of resources", "Practical exposure", "Motivation", "Guidance"],
-        "Need_Recommendations": ["Yes", "Yes", "No", "Yes", "Yes"]
-    }
-    return pd.DataFrame(data)
+    # Calculations
+    brick_volume = brick * (0.19 * 0.09 * 0.09)
+    cement_weight = cement * 50
 
-# Load dataset
-if uploaded_file:
-    if uploaded_file.name.endswith(".csv"):
-        df = pd.read_csv(uploaded_file)
-    else:
-        df = pd.read_excel(uploaded_file)
-elif use_sample:
-    df = create_sample_data()
-else:
-    st.warning("⚠ Please upload a dataset or use the sample dataset.")
-    st.stop()
-
-if "Name" in df.columns:
-    df = df.drop(columns=["Name"])
-
-st.write("### 📊 Dataset Preview")
-st.dataframe(df.head())
-st.markdown("</div>", unsafe_allow_html=True)
-st.markdown("---")
-
-# ---------------------------------
-# 🔧 MODEL TRAINING
-# ---------------------------------
-st.markdown("<div class='stContainer'>", unsafe_allow_html=True)
-st.header("🧠 Model Accuracy")
-
-target_col = "Missing_Skills"
-feature_cols = [col for col in df.columns if col != target_col]
-
-X = df[feature_cols]
-y = df[target_col]
-
-le = LabelEncoder()
-y_encoded = le.fit_transform(y)
-
-numeric_features = X.select_dtypes(include=[np.number]).columns.tolist()
+    st.subheader("Results")
+    st.write("Brick Count:", brick)
+    st.write("Brick Volume (m³):", round(brick_volume, 3))
+    st.write("Cement Bags:", cement)
+    st.write("Cement Weight (kg):", cement_weight)numeric_features = X.select_dtypes(include=[np.number]).columns.tolist()
 categorical_features = X.select_dtypes(include=['object']).columns.tolist()
 
 preprocessor = ColumnTransformer([
